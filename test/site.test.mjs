@@ -59,3 +59,20 @@ test("about page is built and in the nav", async () => {
     .get();
   assert.ok(homeNav.includes("/about/"), "home nav links to /about/");
 });
+
+test("program page is built and in the nav", async () => {
+  assert.ok(
+    existsSync(new URL("../_site/program/index.html", import.meta.url)),
+    "_site/program/index.html exists",
+  );
+  const $ = cheerio.load(await read("program/index.html"));
+  assert.equal($("h1").length, 1, "program has exactly one <h1>");
+  assert.ok(($("title").text() || "").trim().length > 0);
+  assert.ok(($('meta[name="description"]').attr("content") || "").trim().length > 0);
+
+  const homeNav = cheerio
+    .load(await read("index.html"))("header a[href]")
+    .map((_, a) => a.attribs.href)
+    .get();
+  assert.ok(homeNav.includes("/program/"), "home nav links to /program/");
+});
