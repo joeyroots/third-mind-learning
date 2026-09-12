@@ -42,3 +42,20 @@ test("stylesheet is copied through", () => {
     "_site/assets/css/site.css exists",
   );
 });
+
+test("about page is built and in the nav", async () => {
+  assert.ok(
+    existsSync(new URL("../_site/about/index.html", import.meta.url)),
+    "_site/about/index.html exists",
+  );
+  const $ = cheerio.load(await read("about/index.html"));
+  assert.equal($("h1").length, 1, "about has exactly one <h1>");
+  assert.ok(($("title").text() || "").trim().length > 0);
+  assert.ok(($('meta[name="description"]').attr("content") || "").trim().length > 0);
+
+  const homeNav = cheerio
+    .load(await read("index.html"))("header a[href]")
+    .map((_, a) => a.attribs.href)
+    .get();
+  assert.ok(homeNav.includes("/about/"), "home nav links to /about/");
+});
