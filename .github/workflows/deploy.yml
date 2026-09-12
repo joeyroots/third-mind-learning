@@ -1,0 +1,54 @@
+name: deploy
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build-check-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+      - run: node scripts/check.mjs
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+      - name: Deploy preview channel (PR)
+        if: github.event_name == 'pull_request'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_THIRD_MIND_LEARNING }}
+          projectId: third-mind-learning
+          expires: 7d
+      - name: Deploy production (main)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_THIRD_MIND_LEARNING }}
+          projectId: third-mind-learning
+          channelId: live
+      - name: Smoke test production
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          sleep 15
+          url="${{ vars.PROD_URL }}"
+          code=$(curl -sS -o /tmp/body -w '%{http_code}' "$url")
+          echo "HTTP $code for $url"
+          test "$code" = "200" || { echo "expected 200"; exit 1; }
+          grep -q "Third Mind Learning" /tmp/body || { echo "marker string 'Third Mind Learning' missing"; exit 1; }
