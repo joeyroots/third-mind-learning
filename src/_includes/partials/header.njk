@@ -1,0 +1,16 @@
+<header>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <nav aria-label="Primary">
+    <a class="site-name" href="/">{{ site.title }}</a>
+    <ul>
+      {%- for entry in collections.navPages %}
+      <li>
+        <a href="{{ entry.url }}"{% if entry.url == page.url %} aria-current="page"{% endif %}>{{ entry.data.eleventyNavigation.key }}</a>
+      </li>
+      {%- endfor %}
+      {%- for link in nav.external %}
+      <li><a href="{{ link.url }}" rel="noopener" target="_blank">{{ link.label }}</a></li>
+      {%- endfor %}
+    </ul>
+  </nav>
+</header>

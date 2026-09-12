@@ -1,0 +1,20 @@
+{
+  "name": "third-mind-learning",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "eleventy --serve --port=8080",
+    "build": "eleventy",
+    "check": "npm run build && node scripts/check.mjs",
+    "pretest": "npm run build",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "cheerio": "^1.0.0",
+    "html-validate": "^8.24.0",
+    "linkinator": "^6.1.0"
+  }
+}
