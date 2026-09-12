@@ -110,3 +110,26 @@ test("robots.txt points at the sitemap", async () => {
   const txt = await read("robots.txt");
   assert.match(txt, /Sitemap:\s*https?:\/\/\S+\/sitemap\.xml/);
 });
+
+test("firebase.json is valid and has the required hosting config", () => {
+  const cfg = JSON.parse(readFileSync(new URL("../firebase.json", import.meta.url), "utf8"));
+  assert.equal(cfg.hosting.public, "_site");
+  assert.equal(cfg.hosting.cleanUrls, true);
+  assert.equal(cfg.hosting.trailingSlash, true);
+  // Security headers must sit on a source that matches clean URLs (e.g. "**");
+  // "**/*.html" never matches "/about/" when cleanUrls is on.
+  const htmlHeaders = cfg.hosting.headers.find((h) =>
+    h.headers.some((x) => x.key.toLowerCase() === "content-security-policy"),
+  );
+  assert.equal(htmlHeaders.source, "**", "security headers apply to every request path");
+  const keys = htmlHeaders.headers.map((h) => h.key.toLowerCase());
+  for (const required of [
+    "content-security-policy",
+    "x-content-type-options",
+    "referrer-policy",
+    "strict-transport-security",
+  ]) {
+    assert.ok(keys.includes(required), `html headers include ${required}`);
+  }
+  assert.ok(cfg.hosting.headers.some((h) => /max-age=31536000/.test(JSON.stringify(h))), "a long-cache header exists");
+});
