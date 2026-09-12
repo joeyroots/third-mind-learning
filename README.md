@@ -52,4 +52,4 @@ npm run check
 
 `npm run check` printing `0 problems` on a clean clone is the pass condition.
 
-**Last verified:** _(not yet run — see plan Task 11)_
+**Last verified:** 2026-09-12 — clean clone, `npm ci && npm run build && npm run check` passed with 0 problems.
