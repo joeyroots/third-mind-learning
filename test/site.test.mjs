@@ -93,3 +93,20 @@ test("contact page is built and in the nav", async () => {
     .get();
   assert.ok(homeNav.includes("/contact/"), "home nav links to /contact/");
 });
+
+test("sitemap lists all canonical pages and excludes infra", async () => {
+  assert.ok(existsSync(new URL("../_site/sitemap.xml", import.meta.url)), "sitemap.xml exists");
+  const xml = await read("sitemap.xml");
+  const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname);
+  for (const path of ["/", "/about/", "/program/", "/contact/"]) {
+    assert.ok(locs.includes(path), `sitemap has ${path}`);
+  }
+  assert.ok(!locs.includes("/404.html"), "sitemap omits /404.html");
+  assert.ok(!locs.some((p) => p.endsWith("sitemap.xml") || p.endsWith("robots.txt")), "sitemap omits infra files");
+});
+
+test("robots.txt points at the sitemap", async () => {
+  assert.ok(existsSync(new URL("../_site/robots.txt", import.meta.url)), "robots.txt exists");
+  const txt = await read("robots.txt");
+  assert.match(txt, /Sitemap:\s*https?:\/\/\S+\/sitemap\.xml/);
+});
