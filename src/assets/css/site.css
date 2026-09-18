@@ -178,3 +178,13 @@ footer p { max-width: var(--measure); margin: 0 auto; padding: 1.5rem 1.25rem; }
   .hero .lede { font-size: 1.1rem; }
   .btn { display: block; text-align: center; }
 }
+
+/* Bio photo ------------------------------------------------------------- */
+.bio-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin: 0 0 1.75rem;
+  background: var(--tint);
+}
