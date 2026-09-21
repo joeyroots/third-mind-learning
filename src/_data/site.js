@@ -4,7 +4,7 @@ export default {
   title: "Third Mind Learning",
   author: "Third Mind Learning",
   description:
-    "Third Mind Learning — course and education programs.",
+    "SAT/ACT coaching for busy, overscheduled teens, combining test-taking skill with nervous-system regulation.",
   url: process.env.SITE_URL || "http://localhost:8080",
   buildYear: new Date().getFullYear(),
   // Cache-buster for immutably cached assets (firebase.json serves css/js/img
