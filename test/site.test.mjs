@@ -60,13 +60,13 @@ test("about page is built and in the nav", async () => {
   assert.ok(homeNav.includes("/about/"), "home nav links to /about/");
 });
 
-test("program page is built and in the nav", async () => {
+test("privacy page is built and out of the nav", async () => {
   assert.ok(
-    existsSync(new URL("../_site/program/index.html", import.meta.url)),
-    "_site/program/index.html exists",
+    existsSync(new URL("../_site/privacy/index.html", import.meta.url)),
+    "_site/privacy/index.html exists",
   );
-  const $ = cheerio.load(await read("program/index.html"));
-  assert.equal($("h1").length, 1, "program has exactly one <h1>");
+  const $ = cheerio.load(await read("privacy/index.html"));
+  assert.equal($("h1").length, 1, "privacy has exactly one <h1>");
   assert.ok(($("title").text() || "").trim().length > 0);
   assert.ok(($('meta[name="description"]').attr("content") || "").trim().length > 0);
 
@@ -74,7 +74,13 @@ test("program page is built and in the nav", async () => {
     .load(await read("index.html"))("header a[href]")
     .map((_, a) => a.attribs.href)
     .get();
-  assert.ok(homeNav.includes("/program/"), "home nav links to /program/");
+  assert.ok(!homeNav.includes("/privacy/"), "privacy is not in the header nav");
+
+  const footerLinks = cheerio
+    .load(await read("index.html"))("footer a[href]")
+    .map((_, a) => a.attribs.href)
+    .get();
+  assert.ok(footerLinks.includes("/privacy/"), "privacy is linked from the footer");
 });
 
 test("contact page is built and in the nav", async () => {
@@ -98,7 +104,7 @@ test("sitemap lists all canonical pages and excludes infra", async () => {
   assert.ok(existsSync(new URL("../_site/sitemap.xml", import.meta.url)), "sitemap.xml exists");
   const xml = await read("sitemap.xml");
   const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname);
-  for (const path of ["/", "/about/", "/program/", "/contact/"]) {
+  for (const path of ["/", "/about/", "/contact/", "/privacy/"]) {
     assert.ok(locs.includes(path), `sitemap has ${path}`);
   }
   assert.ok(!locs.includes("/404.html"), "sitemap omits /404.html");
