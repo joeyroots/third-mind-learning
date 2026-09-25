@@ -176,6 +176,9 @@ footer .disclaimer { font-size: 0.85rem; }
 .section--dark a:not(.button) {
   color: var(--paper);
 }
+.section--dark .button:focus-visible {
+  outline-color: var(--paper);
+}
 
 /* Hero: full-bleed photo bleeding in behind the headline, gradient-faded
    into solid --ink where the text sits (adapted from COD's hero-image
@@ -212,8 +215,27 @@ footer .disclaimer { font-size: 0.85rem; }
   .hero.section--dark {
     min-height: 32rem;
   }
+  /* Confine the photo to the right 44% of the band at desktop widths —
+     full-bleed (the base rule) put the headline over Joe's face on
+     tablet/laptop widths, since the centered .wrap grew toward the
+     photo as viewport width shrank. */
+  .hero.section--dark .hero-photo {
+    left: auto;
+    width: 44%;
+  }
   .hero.section--dark::after {
-    background: linear-gradient(90deg, var(--ink) 0%, var(--ink) 32%, rgba(23, 32, 42, 0.25) 70%, rgba(23, 32, 42, 0) 100%);
+    background: linear-gradient(90deg, var(--ink) 0%, var(--ink) 58%, rgba(23, 32, 42, 0) 82%);
+  }
+  /* Left-anchor the hero text and cap its width as a viewport fraction
+     (46vw), not a fixed rem value — a fixed cap's safety margin against
+     the photo (which starts at 56vw) shrinks as the viewport narrows,
+     but a vw-based cap keeps a constant ~10vw gap at every width from
+     40rem up, so the text can never reach the photo's left edge. The
+     30rem ceiling just stops the line length growing unreasonably wide
+     on very large screens. */
+  .hero.section--dark .wrap {
+    margin: 0;
+    max-width: min(46vw, 30rem);
   }
 }
 
