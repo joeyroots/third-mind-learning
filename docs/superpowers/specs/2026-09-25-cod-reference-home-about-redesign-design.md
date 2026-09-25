@@ -123,12 +123,17 @@ instead of introducing a new navy:
 - **Not used for the hero:** `stage-videowall-1.jpg` and
   `stage-videowall-2.jpg` — visually busy (dozens of small video
   tiles) and would compete with the headline once faded in.
-- **Better use for the remaining three** (`portrait-backstage.jpg` and
-  both video-wall shots): good fits for Home's founder/credibility
-  section (also getting the dark color-block treatment) or About's
-  story chapters, where a busier background or the portrait's tighter
-  crop isn't a legibility problem. Final placement among these three
-  is still Joe's call — flagged as an open item below.
+
+**Placement of the remaining three (decided):**
+- **Home founder/credibility section:** `portrait-backstage.jpg`,
+  further down the page as the one other Home photo.
+- **About page:** one video-wall shot — `stage-videowall-1.jpg`
+  recommended (mid-gesture, one hand raised) over `-2.jpg` (both arms
+  overhead) as the more natural static content photo; swap freely,
+  it's a minor call.
+- **Left out:** whichever of the two video-wall shots isn't used on
+  About (`stage-videowall-2.jpg` if the recommendation above is kept).
+  Not all four photos need a home on these two pages.
 
 ## Design: Home (`src/index.njk`)
 
@@ -164,10 +169,8 @@ re-sectioning pass. Order, top to bottom:
    content, unchanged copy) — this is already TML's version of COD's
    "Hi, I'm Russ Ruffino" founder block; gets the dark `--ink`
    color-block treatment as one of the "at least one more section"
-   bold backgrounds called for above. Candidate spot for one of the
-   remaining three stage photos (video-wall or blue-light) in place of
-   or alongside the current `joe-ruotolo-speaking.jpg` — Joe's call,
-   see open items.
+   bold backgrounds called for above. Photo: `portrait-backstage.jpg`,
+   in place of or alongside the current `joe-ruotolo-speaking.jpg`.
 
 6. **NEW: Dedicated testimonials section.** The two quotes currently
    embedded inline inside the problem and method sections (Mason G.,
@@ -211,7 +214,10 @@ borrowed at reduced scale:
    - "Why 'Third Mind'" (the name, the idea behind it)
    New `.story-chapter` component: each beat gets a short heading
    (h3) + 1-2 paragraphs, visually separated (COD uses this to make a
-   dense narrative scannable rather than one wall of text).
+   dense narrative scannable rather than one wall of text). One
+   chapter — best fit is probably "Where the method came from" or
+   "Becoming a HeartMath® Trainer" — includes `stage-videowall-1.jpg`
+   as an inline image; exact chapter is an implementation-time call.
 
 3. **NEW: Values, scaled down.** COD's 10-item corporate values grid
    becomes 3-4 concrete coaching principles specific to how Joe works
@@ -254,14 +260,15 @@ Joe has supplied four photos, staged at `reference/joe-photos-2026-09/`
 
 - **Home hero:** `stage-blue-light.jpg`, per the Hero photo section
   above (crop must keep the background banner text out of frame).
-- **Home founder/credibility section:** candidate spot for one of the
-  three remaining photos (`portrait-backstage.jpg`,
-  `stage-videowall-1.jpg`, `stage-videowall-2.jpg`), replacing or
-  sitting alongside the existing `joe-ruotolo-speaking.jpg` — which
-  photo is Joe's call (open item).
-- **About:** existing `.bio-photo` in the hero is unchanged. Story
-  chapters may each optionally take a small inline image from the
-  remaining set; not required to ship the redesign.
+- **Home founder/credibility section:** `portrait-backstage.jpg`,
+  replacing or sitting alongside the existing
+  `joe-ruotolo-speaking.jpg`.
+- **About:** one video-wall shot (`stage-videowall-1.jpg`
+  recommended) placed within the story-chapter content. Existing
+  `.bio-photo` in the hero is unchanged.
+- **Unused:** the other video-wall shot (`stage-videowall-2.jpg` if
+  `-1.jpg` is used on About) — not every supplied photo needs to
+  appear on these two pages.
 
 ## Testing / verification
 
@@ -286,6 +293,9 @@ Per `CLAUDE.md`'s existing workflow:
 - Confirm whether the two existing testimonial quotes (Mason G. and
   the unattributed SAT student) are the only two available, or if more
   exist to fill out the testimonial grid.
-- Hero photo confirmed: `stage-blue-light.jpg`. Where, if anywhere,
-  the other three (`portrait-backstage.jpg` + both video-wall shots)
-  land — Home's founder section, About, both, or held back for later.
+- All four photos placed: hero = `stage-blue-light.jpg`, Home
+  founder/credibility = `portrait-backstage.jpg`, About = one
+  video-wall shot (`stage-videowall-1.jpg` recommended). The other
+  video-wall shot is unused. Only remaining call: confirm which
+  About story chapter gets the photo, and which video-wall shot if
+  Joe prefers `-2.jpg` over `-1.jpg`.
