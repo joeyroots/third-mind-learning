@@ -36,6 +36,14 @@ test("home hero has the hero photo on a dark section with real alt text", async 
   assert.ok(alt.length > 5 && /Joe/.test(alt), "hero photo has real, non-empty alt text mentioning Joe");
 });
 
+test("home page has a stats row with three real, already-stated facts", async () => {
+  const $ = cheerio.load(await read("index.html"));
+  const stats = $(".stats .stat");
+  assert.equal(stats.length, 3, "three stat entries");
+  const numbers = stats.map((_, el) => $(el).find(".stat-number").text().trim()).get();
+  assert.deepEqual(numbers, ["150+", "Certified", "SAT & ACT"]);
+});
+
 test("home page is built with required head elements", async () => {
   assert.ok(existsSync(new URL("../_site/index.html", import.meta.url)), "_site/index.html exists");
   const $ = cheerio.load(await read("index.html"));
