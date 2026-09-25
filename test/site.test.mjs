@@ -60,6 +60,18 @@ test("home page pulls both testimonials into one dedicated grid", async () => {
   assert.equal($(".testimonial-grid .quote").length, 2, "both quotes live in the testimonial grid");
 });
 
+test("about page splits the bio into four story chapters, one with a photo", async () => {
+  const $ = cheerio.load(await read("about/index.html"));
+  const chapters = $(".story-chapter");
+  assert.equal(chapters.length, 4, "four story chapters");
+  assert.equal(chapters.find("> h3").length, 4, "each chapter has its own heading");
+  const img = chapters.find("img");
+  assert.equal(img.length, 1, "exactly one chapter includes the about photo");
+  assert.equal(img.attr("src"), "/assets/img/joe-ruotolo-about.jpg");
+  const alt = (img.attr("alt") || "").trim();
+  assert.ok(alt.length > 5 && /Joe/.test(alt), "about photo has real alt text mentioning Joe");
+});
+
 test("home page is built with required head elements", async () => {
   assert.ok(existsSync(new URL("../_site/index.html", import.meta.url)), "_site/index.html exists");
   const $ = cheerio.load(await read("index.html"));
