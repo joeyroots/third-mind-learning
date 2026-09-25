@@ -7,6 +7,24 @@ import * as cheerio from "cheerio";
 // `npm test` runs `npm run build` first (pretest), so _site/ exists here.
 const read = (p) => readFile(new URL(`../_site/${p}`, import.meta.url), "utf8");
 
+function relativeLuminance(hex) {
+  const c = hex.replace("#", "").match(/.{2}/g).map((h) => {
+    const v = parseInt(h, 16) / 255;
+    return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+}
+function contrastRatio(hexA, hexB) {
+  const [l1, l2] = [relativeLuminance(hexA), relativeLuminance(hexB)].sort((a, b) => b - a);
+  return (l1 + 0.05) / (l2 + 0.05);
+}
+
+test("dark-section text colors meet WCAG AA contrast against --ink", () => {
+  const ink = "#17202a";
+  assert.ok(contrastRatio(ink, "#fdfcf9") >= 4.5, "heading color (--paper) on --ink meets 4.5:1");
+  assert.ok(contrastRatio(ink, "#d7dade") >= 4.5, "body text color on --ink meets 4.5:1");
+});
+
 test("home page is built with required head elements", async () => {
   assert.ok(existsSync(new URL("../_site/index.html", import.meta.url)), "_site/index.html exists");
   const $ = cheerio.load(await read("index.html"));

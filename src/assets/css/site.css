@@ -26,24 +26,24 @@ main { margin: 0; padding: 0; }
 .wrap { max-width: var(--measure); margin: 0 auto; padding: 0 1.25rem; }
 .wrap--wide { max-width: var(--measure-wide); }
 h1, h2, h3 { font-family: var(--font-serif); font-weight: 600; line-height: 1.15; }
-h1 { font-size: 2.25rem; margin: 0 0 1rem; }
-h2 { font-size: 1.85rem; margin: 0 0 1rem; }
+h1 { font-size: 2.5rem; margin: 0 0 1rem; }
+h2 { font-size: 2rem; margin: 0 0 1rem; }
 h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; }
 p { margin: 0 0 1rem; }
 a { color: var(--accent); }
 .lede { font-size: 1.15rem; color: var(--muted); }
 .meta { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.5rem; }
 
-.hero { padding: 3.5rem 0 3rem; }
-.section { padding: 3rem 0; }
+.hero { padding: 4rem 0 3.5rem; }
+.section { padding: 3.5rem 0; }
 .section--tint { background: var(--paper-tint); }
 .section:last-of-type { padding-bottom: 4rem; }
 
 @media (min-width: 40rem) {
-  h1 { font-size: 3rem; }
-  h2 { font-size: 2.1rem; }
-  .hero { padding: 5rem 0 4rem; }
-  .section { padding: 4rem 0; }
+  h1 { font-size: 3.5rem; }
+  h2 { font-size: 2.5rem; }
+  .hero { padding: 6rem 0 5rem; }
+  .section { padding: 5rem 0; }
 }
 
 header {
@@ -89,7 +89,7 @@ footer p { max-width: var(--measure); margin: 0 auto; padding: 1.5rem 1.25rem; }
 }
 
 @media (max-width: 30rem) {
-  h1 { font-size: 1.75rem; }
+  h1 { font-size: 2rem; }
 }
 
 .bio-photo {
@@ -155,3 +155,148 @@ footer p { max-width: var(--measure); margin: 0 auto; padding: 1.5rem 1.25rem; }
 }
 
 footer .disclaimer { font-size: 0.85rem; }
+
+/* Dark color-block sections: hero + founder/credibility, per the
+   COD-informed visual direction (bold sections, not just tint bands). */
+.section--dark {
+  background: var(--ink);
+  color: var(--paper);
+}
+.section--dark h1,
+.section--dark h2,
+.section--dark h3 {
+  color: var(--paper);
+}
+.section--dark p {
+  color: #d7dade;
+}
+.section--dark .lede {
+  color: #c7ccd1;
+}
+.section--dark a:not(.button) {
+  color: var(--paper);
+}
+
+/* Hero: full-bleed photo bleeding in behind the headline, gradient-faded
+   into solid --ink where the text sits (adapted from COD's hero-image
+   technique — reference/clientsondemand-clone/…/index.html, .hero-image). */
+.hero.section--dark {
+  position: relative;
+  overflow: hidden;
+  min-height: 26rem;
+  display: flex;
+  align-items: center;
+}
+.hero.section--dark .hero-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  z-index: 0;
+}
+.hero.section--dark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(180deg, rgba(23, 32, 42, 0.35) 0%, var(--ink) 85%);
+}
+.hero.section--dark .wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+@media (min-width: 40rem) {
+  .hero.section--dark {
+    min-height: 32rem;
+  }
+  .hero.section--dark::after {
+    background: linear-gradient(90deg, var(--ink) 0%, var(--ink) 32%, rgba(23, 32, 42, 0.25) 70%, rgba(23, 32, 42, 0) 100%);
+  }
+}
+
+/* Proof/stats row (Home). */
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.5rem;
+  margin: 0;
+}
+.stats .stat {
+  flex: 1 1 9rem;
+}
+.stats .stat-number {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+.stats .stat-label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* Testimonials as cards, not a single tinted quote block (Home). */
+.testimonial-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin: 0;
+}
+@media (min-width: 40rem) {
+  .testimonial-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+.testimonial-grid .quote {
+  margin: 0;
+  height: 100%;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(23, 32, 42, 0.08);
+}
+
+/* About: story broken into named chapters instead of one dense block. */
+.story-chapter {
+  margin: 0 0 2.5rem;
+}
+.story-chapter:last-child {
+  margin-bottom: 0;
+}
+.story-chapter h3 {
+  color: var(--accent);
+  margin-top: 0;
+}
+.story-chapter img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin: 1rem 0 0;
+}
+
+/* About: coaching principles, small-scale version of COD's values grid. */
+.values-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin: 0;
+}
+@media (min-width: 30rem) {
+  .values-grid { grid-template-columns: 1fr 1fr; }
+}
+.values-grid .value {
+  padding: 1.25rem;
+  background: var(--paper-tint);
+  border-radius: 8px;
+}
+.values-grid h3 {
+  font-size: 1.05rem;
+  margin: 0 0 0.35rem;
+}
+.values-grid p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
