@@ -72,6 +72,13 @@ test("about page splits the bio into four story chapters, one with a photo", asy
   assert.ok(alt.length > 5 && /Joe/.test(alt), "about photo has real alt text mentioning Joe");
 });
 
+test("about page has a values grid with placeholder content flagged for Joe", async () => {
+  const html = await read("about/index.html");
+  const $ = cheerio.load(html);
+  assert.equal($(".values-grid .value").length, 4, "four value entries");
+  assert.ok(html.includes("CONTENT:"), "placeholder values are flagged with a CONTENT comment for Joe to fill in");
+});
+
 test("home page is built with required head elements", async () => {
   assert.ok(existsSync(new URL("../_site/index.html", import.meta.url)), "_site/index.html exists");
   const $ = cheerio.load(await read("index.html"));
