@@ -25,6 +25,17 @@ test("dark-section text colors meet WCAG AA contrast against --ink", () => {
   assert.ok(contrastRatio(ink, "#d7dade") >= 4.5, "body text color on --ink meets 4.5:1");
 });
 
+test("home hero has the hero photo on a dark section with real alt text", async () => {
+  const $ = cheerio.load(await read("index.html"));
+  const hero = $(".hero.section--dark");
+  assert.equal(hero.length, 1, "hero is a dark section");
+  const img = hero.find("img.hero-photo");
+  assert.equal(img.length, 1, "hero photo present");
+  assert.equal(img.attr("src"), "/assets/img/joe-ruotolo-hero.jpg");
+  const alt = (img.attr("alt") || "").trim();
+  assert.ok(alt.length > 5 && /Joe/.test(alt), "hero photo has real, non-empty alt text mentioning Joe");
+});
+
 test("home page is built with required head elements", async () => {
   assert.ok(existsSync(new URL("../_site/index.html", import.meta.url)), "_site/index.html exists");
   const $ = cheerio.load(await read("index.html"));
