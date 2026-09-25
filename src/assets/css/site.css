@@ -180,6 +180,7 @@ footer p { max-width: var(--measure); margin: 0 auto; padding: 1.5rem 1.25rem; }
   margin: 2rem auto 0;
 }
 @media (min-width: 48rem) {
+  .hero--dark { min-height: 30rem; }
   .hero-photo {
     position: absolute;
     right: 0;
@@ -190,6 +191,7 @@ footer p { max-width: var(--measure); margin: 0 auto; padding: 1.5rem 1.25rem; }
     margin: 0;
     border-radius: 0;
     object-fit: cover;
+    object-position: 50% 15%;
     -webkit-mask-image: linear-gradient(to right, transparent, black 20%);
     mask-image: linear-gradient(to right, transparent, black 20%);
   }
