@@ -1,6 +1,6 @@
 :root {
-  --measure: 42rem;
-  --measure-wide: 54rem;
+  --measure: 44rem;
+  --measure-wide: 62rem;
   --ink: #17202a;
   --paper: #fdfcf9;
   --paper-tint: #f4efe4;
@@ -42,6 +42,21 @@ a { color: var(--accent); }
   margin: 0 0 0.5rem;
 }
 .proof-strip { color: var(--muted); font-size: 0.95rem; margin: 1.75rem 0 0; }
+
+/* Standalone callout for a section's single most important line, pulled
+   out of paragraph flow entirely rather than styled as another sentence. */
+.statement {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  line-height: 1.35;
+  font-weight: 600;
+  margin: 2rem 0;
+}
+.statement p { margin: 0 0 0.25rem; }
+.statement p:last-child { margin-bottom: 0; }
+@media (min-width: 40rem) {
+  .statement { font-size: 1.9rem; }
+}
 
 .hero { padding: 3.5rem 0 3rem; }
 .section { padding: 3rem 0; }
@@ -203,6 +218,7 @@ footer p { max-width: var(--measure); margin: 0 auto; padding: 1.5rem 1.25rem; }
   flex-direction: column;
   gap: 1.5rem;
 }
+.bio-grid h3:first-child { margin-top: 0; }
 @media (min-width: 40rem) {
   .bio-grid { flex-direction: row; align-items: flex-start; gap: 2.5rem; }
   .bio-grid .bio-photo { flex: 0 0 14rem; width: 14rem; margin: 0; }
