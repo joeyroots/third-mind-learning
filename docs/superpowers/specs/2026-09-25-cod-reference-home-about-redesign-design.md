@@ -22,6 +22,19 @@ hero banners, a custom webfont, a press-logo ticker, photo-heavy
 testimonial cards in a Swiper carousel, a company team grid, and a
 10-item values grid.
 
+**Revision note (2026-09-25, same day):** PR #7
+(`home/first-principles-rewrite`) independently rewrote Home's copy and
+made a first attempt at visual hierarchy (serif headings, tint-band
+sections, a split two-column "How" section, a photo+text bio grid) —
+live at a Firebase preview URL. Joe reviewed it and found it too
+subdued relative to COD — closer to an editorial blog than a marketing
+page. Its commit (`e1e6a8f`) has been cherry-picked onto this branch
+(now `0ddaa4e`) so this redesign builds on PR #7's copy, but the
+**visual execution below supersedes PR #7's CSS** — bolder color-block
+sections, bigger type scale, and a hero photo, per Joe's direct
+feedback after seeing PR #7 rendered. The original "structure only,
+lighter execution" fidelity call (below) is revised accordingly.
+
 ## Scope
 
 **In scope:** redesign `src/index.njk` (Home) and `src/about.njk` (About)
@@ -40,22 +53,81 @@ $100M sales-training brand.
   shows in a carousel becomes a static grid/list here.
 - A company team grid — not applicable; TML is Joe, solo.
 - Press-logo bar — TML has no press mentions to display; not ported.
-- New photography — Joe will supply additional real photos separately;
-  this spec designs image *slots* sized for them, not the sourcing of
-  the photos themselves.
+- New photography beyond the four photos Joe has now supplied (staged
+  at `reference/joe-photos-2026-09/`) — no further photo sourcing is
+  part of this spec.
 
 ## Approach: CSS
 
 Extend the existing single `src/assets/css/site.css` file in place —
 new component classes (`.stats`, `.testimonial-grid`, `.story-chapter`,
-`.values-grid`) added alongside the current rules, reusing the existing
-design tokens (`--ink`, `--paper`, `--muted`, `--accent`, `--rule`).
+`.values-grid`, `.hero-photo`) added alongside the current rules,
+reusing the existing design tokens (`--ink`, `--paper`, `--muted`,
+`--accent`, `--rule`) plus one addition: a dark section-background
+variant (see Visual direction, below).
 
 No new CSS files, no build-step changes. Splitting into multiple CSS
 files/partials (a small design-system layout) was considered and
 rejected as premature for a two-page, ~100-line stylesheet — it's
 solving for a scale this site doesn't have yet. Revisit only if a
 future page redesign makes the single file unwieldy.
+
+## Visual direction (revised)
+
+Joe's decision after seeing PR #7 rendered: keep the earlier calls to
+skip a custom webfont and any JS carousel (neither was reopened), but
+push three things further toward COD's actual visual weight:
+
+1. **Bold color-block sections**, not just subtle tint bands. At least
+   one section per page (the hero, and Home's founder/credibility
+   section) gets a solid dark background using `--ink` (#17202a,
+   already in the palette — no new color token needed) rather than the
+   current `--paper-tint`. Text on those sections switches to
+   light-on-dark (`--paper` for body text, white/near-white for
+   headings).
+2. **Bigger typographic scale and contrast.** Push H1/H2 sizing and
+   surrounding whitespace further than PR #7's already-larger serif
+   sizes — larger jump between hero H1 and body copy, more breathing
+   room around section headings, so section transitions read with the
+   same punch COD's do.
+3. **Testimonials as visual cards** — bordered/shadowed `.testimonial-grid`
+   cards (already planned below), not a plain tinted quote block.
+
+## Hero photo
+
+COD's actual hero technique (`reference/clientsondemand-clone/…/index.html`,
+`.hero-image` CSS): a full-bleed dark (`#020A27`) header band; a large
+photo absolutely positioned to bleed in from the right, `background-size:
+cover`, faded into the dark background via a linear-gradient overlay on
+its left edge; headline, subhead, and CTA sit on the left, over solid
+dark. TML adopts the same technique at smaller scale, using `--ink`
+instead of introducing a new navy:
+
+- New `.hero-photo` component: photo positioned right/behind, gradient
+  fade into `--ink` on its left edge, headline block on the left over
+  solid `--ink`. Mobile: photo drops below or behind at reduced
+  opacity so text stays legible at narrow widths (COD does the
+  equivalent with its own breakpoint rules).
+- **Recommended photo: `portrait-backstage.jpg`.** Clean dark
+  background already, no visible third-party branding/text to crop
+  around, and a direct, approachable expression — easiest to composite
+  cleanly into a gradient and the safest choice for a hero.
+- **Not recommended for the hero:** `stage-videowall-1.jpg` and
+  `stage-videowall-2.jpg` — visually busy (dozens of small video
+  tiles) and would compete with the headline once faded in; `-2.jpg`'s
+  gesture would also get harshly cropped at 80%-width/right-bleed.
+  `stage-blue-light.jpg` — dramatic, but has a partially legible
+  banner in the background ("THE GL… ILD YOU…") for a different, unnamed
+  event, which reads as an unrelated brand bleeding through unless
+  cropped tightly.
+- **Better use for the other three:** the video-wall and blue-light
+  photos read as "experienced public speaker in front of a real
+  audience" — a good fit for Home's founder/credibility section (which
+  is also getting the dark color-block treatment) or About's story
+  chapters, where the photo doesn't need to blend into a gradient and
+  a busier background or partial signage is far less of a problem.
+  Final placement of these three is Joe's call — flagged as an open
+  item below rather than decided here.
 
 ## Design: Home (`src/index.njk`)
 
@@ -64,8 +136,10 @@ mid-page CTA → founder story → stats → testimonials → final CTA — maps
 onto TML's existing content with two structural additions and one
 re-sectioning pass. Order, top to bottom:
 
-1. **Hero** (existing, unchanged in content) — H1 + lede + primary CTA
-   button. Already matches COD's hero pattern structurally.
+1. **Hero** (PR #7's copy, unchanged) — H1 + lede + primary CTA button,
+   now on a dark `--ink` background with `portrait-backstage.jpg`
+   bleeding in via the `.hero-photo` treatment described above —
+   TML's version of COD's navy-band-plus-photo hero.
 
 2. **Problem section** (existing "Why prepared students still
    underperform on test day" content, unchanged copy) — re-sectioned
@@ -83,9 +157,14 @@ re-sectioning pass. Order, top to bottom:
    management for the pressure" content, unchanged copy) — same
    re-sectioning treatment as #2.
 
-5. **Founder/credibility section** (existing "Who'll be in your teen's
-   corner" content, unchanged copy) — kept as-is; this is already
-   TML's version of COD's "Hi, I'm Russ Ruffino" founder block.
+5. **Founder/credibility section** (PR #7's photo+text bio-grid
+   content, unchanged copy) — this is already TML's version of COD's
+   "Hi, I'm Russ Ruffino" founder block; gets the dark `--ink`
+   color-block treatment as one of the "at least one more section"
+   bold backgrounds called for above. Candidate spot for one of the
+   remaining three stage photos (video-wall or blue-light) in place of
+   or alongside the current `joe-ruotolo-speaking.jpg` — Joe's call,
+   see open items.
 
 6. **NEW: Dedicated testimonials section.** The two quotes currently
    embedded inline inside the problem and method sections (Mason G.,
@@ -152,6 +231,10 @@ enough not to need in-page navigation).
 
 All added to `src/assets/css/site.css`, reusing existing tokens:
 
+- `.hero-photo` — dark band + right-bleed photo with gradient fade,
+  headline over solid dark (Home)
+- `.section--dark` — solid `--ink` background, light-on-dark text, for
+  the hero and founder/credibility sections (Home)
 - `.stats` — row of number/label pairs (Home)
 - `.testimonial-grid` — grid of quote cards, replaces inline `.quote`
   usage for the two testimonials being consolidated (Home)
@@ -159,19 +242,21 @@ All added to `src/assets/css/site.css`, reusing existing tokens:
   (About)
 - `.values-grid` — small grid of heading + one-line statement (About)
 
-No new color tokens, no new fonts, no JS.
+No new color tokens (reuses `--ink`/`--paper`), no new fonts, no JS.
 
 ## Image slots
 
-Per the imagery decision already made: Joe will supply additional real
-photos separately. This spec reserves slots for them but does not
-block on having them in hand:
+Joe has supplied four photos, staged at `reference/joe-photos-2026-09/`
+(not yet wired into any template):
 
-- Home: no new image slots required by this design (stats and
-  testimonials are text-only, matching "lighter execution").
-- About: story chapters may each optionally take a small inline image
-  once supplied; not required to ship the redesign. Existing
-  `.bio-photo` in the hero is unchanged.
+- **Home hero:** `portrait-backstage.jpg`, per the Hero photo section
+  above.
+- **Home founder/credibility section:** candidate spot for one of the
+  three remaining photos, replacing or sitting alongside the existing
+  `joe-ruotolo-speaking.jpg` — which photo is Joe's call (open item).
+- **About:** existing `.bio-photo` in the hero is unchanged. Story
+  chapters may each optionally take a small inline image from the
+  remaining set; not required to ship the redesign.
 
 ## Testing / verification
 
@@ -196,3 +281,6 @@ Per `CLAUDE.md`'s existing workflow:
 - Confirm whether the two existing testimonial quotes (Mason G. and
   the unattributed SAT student) are the only two available, or if more
   exist to fill out the testimonial grid.
+- Confirm the hero photo pick (`portrait-backstage.jpg` recommended
+  above) and where, if anywhere, the other three stage photos land —
+  Home's founder section, About, both, or held back for later.
