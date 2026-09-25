@@ -54,6 +54,12 @@ test("home founder section is dark and uses the founder photo", async () => {
   assert.ok(alt.length > 2 && /Joe/.test(alt), "founder photo has real alt text mentioning Joe");
 });
 
+test("home page pulls both testimonials into one dedicated grid", async () => {
+  const $ = cheerio.load(await read("index.html"));
+  assert.equal($(".quote").length, 2, "exactly two testimonial quotes on the page");
+  assert.equal($(".testimonial-grid .quote").length, 2, "both quotes live in the testimonial grid");
+});
+
 test("home page is built with required head elements", async () => {
   assert.ok(existsSync(new URL("../_site/index.html", import.meta.url)), "_site/index.html exists");
   const $ = cheerio.load(await read("index.html"));
