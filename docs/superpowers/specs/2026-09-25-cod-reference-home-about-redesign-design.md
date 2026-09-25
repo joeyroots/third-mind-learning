@@ -108,26 +108,27 @@ instead of introducing a new navy:
   solid `--ink`. Mobile: photo drops below or behind at reduced
   opacity so text stays legible at narrow widths (COD does the
   equivalent with its own breakpoint rules).
-- **Recommended photo: `portrait-backstage.jpg`.** Clean dark
-  background already, no visible third-party branding/text to crop
-  around, and a direct, approachable expression — easiest to composite
-  cleanly into a gradient and the safest choice for a hero.
-- **Not recommended for the hero:** `stage-videowall-1.jpg` and
+- **Selected photo: `stage-blue-light.jpg`** (Joe's call, overriding
+  the initial recommendation below). Dramatic blue stage lighting fits
+  the dark-band treatment well. **Implementation note:** this photo has
+  a partially legible banner in the background ("THE GL… ILD YOU…")
+  for a different, unnamed event — the crop/positioning used in
+  `.hero-photo` must push that text out of the visible frame (or far
+  enough under the gradient fade that it's unreadable), so the hero
+  doesn't appear to reference another program's branding. Verify this
+  visually once implemented, not just by CSS math.
+- *(Initial recommendation, superseded above): `portrait-backstage.jpg`
+  — clean dark background, no crop concerns, but Joe chose the bolder
+  stage shot instead.)*
+- **Not used for the hero:** `stage-videowall-1.jpg` and
   `stage-videowall-2.jpg` — visually busy (dozens of small video
-  tiles) and would compete with the headline once faded in; `-2.jpg`'s
-  gesture would also get harshly cropped at 80%-width/right-bleed.
-  `stage-blue-light.jpg` — dramatic, but has a partially legible
-  banner in the background ("THE GL… ILD YOU…") for a different, unnamed
-  event, which reads as an unrelated brand bleeding through unless
-  cropped tightly.
-- **Better use for the other three:** the video-wall and blue-light
-  photos read as "experienced public speaker in front of a real
-  audience" — a good fit for Home's founder/credibility section (which
-  is also getting the dark color-block treatment) or About's story
-  chapters, where the photo doesn't need to blend into a gradient and
-  a busier background or partial signage is far less of a problem.
-  Final placement of these three is Joe's call — flagged as an open
-  item below rather than decided here.
+  tiles) and would compete with the headline once faded in.
+- **Better use for the remaining three** (`portrait-backstage.jpg` and
+  both video-wall shots): good fits for Home's founder/credibility
+  section (also getting the dark color-block treatment) or About's
+  story chapters, where a busier background or the portrait's tighter
+  crop isn't a legibility problem. Final placement among these three
+  is still Joe's call — flagged as an open item below.
 
 ## Design: Home (`src/index.njk`)
 
@@ -137,9 +138,11 @@ onto TML's existing content with two structural additions and one
 re-sectioning pass. Order, top to bottom:
 
 1. **Hero** (PR #7's copy, unchanged) — H1 + lede + primary CTA button,
-   now on a dark `--ink` background with `portrait-backstage.jpg`
+   now on a dark `--ink` background with `stage-blue-light.jpg`
    bleeding in via the `.hero-photo` treatment described above —
-   TML's version of COD's navy-band-plus-photo hero.
+   TML's version of COD's navy-band-plus-photo hero. Crop/position
+   must keep the background banner text out of frame (see Hero photo
+   section).
 
 2. **Problem section** (existing "Why prepared students still
    underperform on test day" content, unchanged copy) — re-sectioned
@@ -249,11 +252,13 @@ No new color tokens (reuses `--ink`/`--paper`), no new fonts, no JS.
 Joe has supplied four photos, staged at `reference/joe-photos-2026-09/`
 (not yet wired into any template):
 
-- **Home hero:** `portrait-backstage.jpg`, per the Hero photo section
-  above.
+- **Home hero:** `stage-blue-light.jpg`, per the Hero photo section
+  above (crop must keep the background banner text out of frame).
 - **Home founder/credibility section:** candidate spot for one of the
-  three remaining photos, replacing or sitting alongside the existing
-  `joe-ruotolo-speaking.jpg` — which photo is Joe's call (open item).
+  three remaining photos (`portrait-backstage.jpg`,
+  `stage-videowall-1.jpg`, `stage-videowall-2.jpg`), replacing or
+  sitting alongside the existing `joe-ruotolo-speaking.jpg` — which
+  photo is Joe's call (open item).
 - **About:** existing `.bio-photo` in the hero is unchanged. Story
   chapters may each optionally take a small inline image from the
   remaining set; not required to ship the redesign.
@@ -281,6 +286,6 @@ Per `CLAUDE.md`'s existing workflow:
 - Confirm whether the two existing testimonial quotes (Mason G. and
   the unattributed SAT student) are the only two available, or if more
   exist to fill out the testimonial grid.
-- Confirm the hero photo pick (`portrait-backstage.jpg` recommended
-  above) and where, if anywhere, the other three stage photos land —
-  Home's founder section, About, both, or held back for later.
+- Hero photo confirmed: `stage-blue-light.jpg`. Where, if anywhere,
+  the other three (`portrait-backstage.jpg` + both video-wall shots)
+  land — Home's founder section, About, both, or held back for later.
