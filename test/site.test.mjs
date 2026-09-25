@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import * as cheerio from "cheerio";
 
 // `npm test` runs `npm run build` first (pretest), so _site/ exists here.
@@ -77,6 +77,16 @@ test("about page has a values grid with placeholder content flagged for Joe", as
   const $ = cheerio.load(html);
   assert.equal($(".values-grid .value").length, 4, "four value entries");
   assert.ok(html.includes("CONTENT:"), "placeholder values are flagged with a CONTENT comment for Joe to fill in");
+});
+
+test("home page's local image weight stays reasonable", async () => {
+  const $ = cheerio.load(await read("index.html"));
+  const srcs = $("img[src^='/assets/img/']").map((_, el) => $(el).attr("src")).get();
+  const totalBytes = srcs.reduce((sum, src) => {
+    const path = new URL(`../_site${src}`, import.meta.url);
+    return sum + statSync(path).size;
+  }, 0);
+  assert.ok(totalBytes < 1.5 * 1024 * 1024, `home page images total ${(totalBytes / 1024 / 1024).toFixed(2)}MB, expected < 1.5MB`);
 });
 
 test("home page is built with required head elements", async () => {
