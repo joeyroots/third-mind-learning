@@ -44,6 +44,16 @@ test("home page has a stats row with three real, already-stated facts", async ()
   assert.deepEqual(numbers, ["150+", "Certified", "SAT & ACT"]);
 });
 
+test("home founder section is dark and uses the founder photo", async () => {
+  const $ = cheerio.load(await read("index.html"));
+  const founder = $(".section--dark").filter((_, el) => $(el).find(".bio-grid").length > 0);
+  assert.equal(founder.length, 1, "founder section is a dark section");
+  const img = founder.find("img.bio-photo");
+  assert.equal(img.attr("src"), "/assets/img/joe-ruotolo-founder.jpg");
+  const alt = (img.attr("alt") || "").trim();
+  assert.ok(alt.length > 2 && /Joe/.test(alt), "founder photo has real alt text mentioning Joe");
+});
+
 test("home page is built with required head elements", async () => {
   assert.ok(existsSync(new URL("../_site/index.html", import.meta.url)), "_site/index.html exists");
   const $ = cheerio.load(await read("index.html"));
