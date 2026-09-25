@@ -1,10 +1,15 @@
 :root {
   --measure: 42rem;
+  --measure-wide: 54rem;
   --ink: #17202a;
   --paper: #fdfcf9;
+  --paper-tint: #f4efe4;
   --muted: #5c6570;
   --accent: #2f6f5e;
+  --accent-soft: #eaf1ee;
   --rule: #e3e0d8;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
 }
 * { box-sizing: border-box; }
 html { font-size: 100%; -webkit-text-size-adjust: 100%; }
@@ -12,18 +17,34 @@ body {
   margin: 0;
   color: var(--ink);
   background: var(--paper);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.6;
 }
-main { max-width: var(--measure); margin: 0 auto; padding: 2rem 1.25rem 4rem; }
-h1, h2, h3 { line-height: 1.25; }
-h1 { font-size: 2rem; margin: 0 0 1rem; }
-h2 { font-size: 1.35rem; margin: 2.5rem 0 0.75rem; }
-h3 { font-size: 1.1rem; margin: 1.5rem 0 0.25rem; }
+/* Every page is a stack of full-bleed .hero/.section bands (for
+   background color), each holding exactly one centered .wrap. */
+main { margin: 0; padding: 0; }
+.wrap { max-width: var(--measure); margin: 0 auto; padding: 0 1.25rem; }
+.wrap--wide { max-width: var(--measure-wide); }
+h1, h2, h3 { font-family: var(--font-serif); font-weight: 600; line-height: 1.15; }
+h1 { font-size: 2.25rem; margin: 0 0 1rem; }
+h2 { font-size: 1.85rem; margin: 0 0 1rem; }
+h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; }
 p { margin: 0 0 1rem; }
 a { color: var(--accent); }
 .lede { font-size: 1.15rem; color: var(--muted); }
 .meta { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.5rem; }
+
+.hero { padding: 3.5rem 0 3rem; }
+.section { padding: 3rem 0; }
+.section--tint { background: var(--paper-tint); }
+.section:last-of-type { padding-bottom: 4rem; }
+
+@media (min-width: 40rem) {
+  h1 { font-size: 3rem; }
+  h2 { font-size: 2.1rem; }
+  .hero { padding: 5rem 0 4rem; }
+  .section { padding: 4rem 0; }
+}
 
 header {
   border-bottom: 1px solid var(--rule);
@@ -68,8 +89,7 @@ footer p { max-width: var(--measure); margin: 0 auto; padding: 1.5rem 1.25rem; }
 }
 
 @media (max-width: 30rem) {
-  h1 { font-size: 1.6rem; }
-  main { padding-top: 1.25rem; }
+  h1 { font-size: 1.75rem; }
 }
 
 .bio-photo {
@@ -93,9 +113,45 @@ footer p { max-width: var(--measure); margin: 0 auto; padding: 1.5rem 1.25rem; }
 .button:hover, .button:focus-visible { background: #255849; }
 .button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
-.quote { margin: 1.75rem 0 0; padding-left: 1.25rem; border-left: 3px solid var(--accent); }
-.quote blockquote { margin: 0; font-size: 1.1rem; }
+.quote {
+  margin: 2rem 0 0;
+  padding: 1.5rem 1.75rem;
+  background: var(--accent-soft);
+}
+.quote blockquote {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  line-height: 1.45;
+  font-style: italic;
+}
 .quote blockquote p { margin: 0 0 0.5rem; }
-.quote figcaption { color: var(--muted); font-size: 0.95rem; }
+.quote figcaption { color: var(--muted); font-size: 0.95rem; font-style: normal; }
+
+/* How section: content-mastery and state-management sit as two co-equal
+   halves, so the layout enacts the claim instead of just stating it. */
+.split {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+@media (min-width: 40rem) {
+  .split { flex-direction: row; gap: 2.5rem; }
+  .split > div { flex: 1; }
+  .split > div:first-child { padding-right: 2.5rem; border-right: 1px solid var(--rule); }
+}
+
+/* Background section: photo alongside the track-record copy. */
+.bio-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+@media (min-width: 40rem) {
+  .bio-grid { flex-direction: row; align-items: flex-start; gap: 2.5rem; }
+  .bio-grid .bio-photo { flex: 0 0 14rem; width: 14rem; margin: 0; }
+  .bio-grid > div { flex: 1; }
+}
 
 footer .disclaimer { font-size: 0.85rem; }
