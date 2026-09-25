@@ -286,16 +286,30 @@ Per `CLAUDE.md`'s existing workflow:
 
 ## Open items for Joe
 
-- Real numbers for the Home stats block (student count, certification,
-  years, etc. — whatever is accurate).
-- Draft or approve copy for the 3-4 About values statements (currently
-  placeholder-blocked per `CLAUDE.md` convention).
-- Confirm whether the two existing testimonial quotes (Mason G. and
-  the unattributed SAT student) are the only two available, or if more
-  exist to fill out the testimonial grid.
-- All four photos placed: hero = `stage-blue-light.jpg`, Home
-  founder/credibility = `portrait-backstage.jpg`, About = one
-  video-wall shot (`stage-videowall-1.jpg` recommended). The other
-  video-wall shot is unused. Only remaining call: confirm which
-  About story chapter gets the photo, and which video-wall shot if
-  Joe prefers `-2.jpg` over `-1.jpg`.
+**Resolved during implementation** (using facts already present in the
+approved copy — no new claims introduced):
+- Home stats block ships with three facts already stated elsewhere on
+  the page: "150+ / Students coached," "Certified / HeartMath® Trainer,"
+  "SAT & ACT / Test prep specialty."
+- Testimonial grid ships with the two existing quotes (Mason G. and the
+  unattributed SAT student) — no more were available, so the grid is
+  built for exactly two, not padded for a count it doesn't have.
+- All four photos placed: hero = `stage-blue-light.jpg` (cropped to
+  exclude the background banner), Home founder/credibility =
+  `portrait-backstage.jpg`, About story chapter ("Where the method came
+  from") = `stage-videowall-1.jpg` (cropped to remove the clearest
+  legible law-firm logos). `stage-videowall-2.jpg` went unused, per the
+  earlier call that not all four photos needed a home.
+
+**Still open:**
+- Draft or approve copy for the 4 About values statements — currently
+  shipped as visibly-placeholder text ("Principle 1," "Placeholder —
+  one-sentence statement...") with `<!-- CONTENT: ... -->` comments per
+  `CLAUDE.md` convention, at `src/about.njk`'s "How I coach" section.
+- Unrelated observation from QA, not part of this spec's scope: the
+  pre-existing About-hero photo (`joe-ruotolo-speaking.jpg`, untouched
+  here) turns out to be a less-cropped version of the same blue-lit
+  stage photo used in Home's new hero — it also has the background
+  event banner partially visible. Worth a follow-up crop at some point,
+  but out of scope for this redesign (About's hero was spec'd as
+  unchanged).
