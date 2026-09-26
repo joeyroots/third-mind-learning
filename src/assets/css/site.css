@@ -162,6 +162,25 @@ footer p { max-width: var(--measure-wide); margin: 0 auto; padding: 1.5rem 1.25r
 .quote blockquote p { margin: 0 0 0.5rem; }
 .quote figcaption { color: var(--muted); font-size: 0.95rem; font-style: normal; }
 
+/* Lead quote: the first proof after the hero, set large on the page
+   itself rather than boxed, with the same green top rule as the
+   credentials rail. */
+.quote--lead {
+  margin: 0;
+  padding: 1.25rem 0 0;
+  background: none;
+  border-top: 3px solid var(--accent);
+}
+.quote--lead blockquote {
+  font-size: 1.45rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.4;
+}
+@media (min-width: 40rem) {
+  .quote--lead blockquote { font-size: 1.75rem; }
+}
+
 /* How section: content-mastery and state-management sit as two co-equal
    halves, so the layout enacts the claim instead of just stating it. */
 .split {
