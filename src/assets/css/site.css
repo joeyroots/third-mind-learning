@@ -285,3 +285,32 @@ footer p { max-width: var(--measure-wide); margin: 0 auto; padding: 1.5rem 1.25r
 }
 
 footer .disclaimer { font-size: 0.85rem; }
+
+/* "It's a state" band: the page's second dark moment after the hero.
+   The line underneath runs edge to edge, irregular and grey on the left,
+   settling into a steady green rhythm on the right: the state change the
+   statement describes. Decorative only (aria-hidden). */
+.section--dark { background: var(--ink); color: var(--paper); }
+.statement-band { padding-bottom: 0; }
+.statement-band .statement {
+  margin: 0;
+  font-size: 1.85rem;
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+.coherence-line {
+  display: block;
+  width: 100%;
+  height: 6.5rem;
+  margin-top: 2.5rem;
+}
+.coherence-line path {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+@media (min-width: 40rem) {
+  .statement-band .statement { font-size: 2.4rem; }
+  .coherence-line { height: 9rem; margin-top: 3rem; }
+}
