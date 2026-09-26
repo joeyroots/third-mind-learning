@@ -325,6 +325,11 @@ footer .disclaimer { font-size: 0.85rem; }
   border-radius: 8px;
 }
 
+/* Contact page: pull the form up closer to the intro copy than the
+   default .hero/.section stack allows, so it clears the fold sooner. */
+.hero--tight { padding-bottom: 1.5rem; }
+.section--tight { padding-top: 1rem; }
+
 @media (min-width: 40rem) {
   .statement-band .statement { font-size: 2.4rem; }
   .coherence-line { height: 9rem; margin-top: 3rem; }
