@@ -334,3 +334,30 @@ footer .disclaimer { font-size: 0.85rem; }
   .statement-band .statement { font-size: 2.4rem; }
   .coherence-line { height: 9rem; margin-top: 3rem; }
 }
+
+/* Research page: a study's own published figures, set apart from its
+   plain-language summary so a skimming reader still catches the numbers. */
+.study-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0 0 1rem;
+}
+.stat {
+  flex: 1 1 11rem;
+  padding: 0.85rem 1.1rem;
+  background: var(--accent-soft);
+  border-radius: 0.5rem;
+}
+.stat-value {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin: 0 0 0.15rem;
+}
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0;
+}
