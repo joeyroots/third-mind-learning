@@ -200,6 +200,22 @@ footer p { max-width: var(--measure-wide); margin: 0 auto; padding: 1.5rem 1.25r
   .split > .card { flex: 1; }
 }
 
+/* Approach opener: the statement band says states can change, and this
+   photo shows the changed state before the section explains how. Crop
+   is set by CSS so one file serves phone (4:3) and desktop (2:1). */
+.approach-photo { margin: 0 0 2.5rem; }
+.approach-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+@media (min-width: 48rem) {
+  .approach-photo img { aspect-ratio: 2 / 1; }
+}
+
 /* Hero: full-bleed dark band, photo bleeding in from the right edge with
    a gradient fade (COD's technique), text over solid dark on the left.
    On narrower screens the photo runs edge to edge across the top of the
