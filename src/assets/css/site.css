@@ -21,10 +21,13 @@ body {
   line-height: 1.6;
 }
 /* Every page is a stack of full-bleed .hero/.section bands (for
-   background color), each holding exactly one centered .wrap. */
+   background color), each holding exactly one centered .wrap. Every .wrap
+   (and the header/footer) spans the same wide container so all bands share
+   one left edge; a plain .wrap keeps a reading measure by narrowing its
+   children from the right, while .wrap--wide lets them use the full width. */
 main { margin: 0; padding: 0; }
-.wrap { max-width: var(--measure); margin: 0 auto; padding: 0 1.25rem; }
-.wrap--wide { max-width: var(--measure-wide); }
+.wrap { max-width: var(--measure-wide); margin: 0 auto; padding: 0 1.25rem; }
+.wrap:not(.wrap--wide) > * { max-width: var(--measure); }
 h1, h2, h3 { font-family: var(--font-serif); font-weight: 600; line-height: 1.15; }
 h1 { font-size: 2.25rem; margin: 0 0 1rem; }
 h2 { font-size: 1.85rem; margin: 0 0 1rem; }
@@ -74,7 +77,7 @@ header {
   border-bottom: 1px solid var(--rule);
 }
 header nav {
-  max-width: var(--measure);
+  max-width: var(--measure-wide);
   margin: 0 auto;
   padding: 1rem 1.25rem;
   display: flex;
@@ -98,7 +101,7 @@ footer {
   color: var(--muted);
   font-size: 0.9rem;
 }
-footer p { max-width: var(--measure); margin: 0 auto; padding: 1.5rem 1.25rem; }
+footer p { max-width: var(--measure-wide); margin: 0 auto; padding: 1.5rem 1.25rem; }
 
 .skip-link {
   position: absolute;
@@ -173,7 +176,8 @@ footer p { max-width: var(--measure); margin: 0 auto; padding: 1.5rem 1.25rem; }
 
 /* Hero: full-bleed dark band, photo bleeding in from the right edge with
    a gradient fade (COD's technique), text over solid dark on the left.
-   Photo is a plain contained image below the text on mobile. */
+   On narrower screens the photo runs edge to edge across the top of the
+   band instead, fading into the dark at its bottom edge. */
 .hero--dark {
   background: var(--ink);
   color: var(--paper);
@@ -186,23 +190,30 @@ footer p { max-width: var(--measure); margin: 0 auto; padding: 1.5rem 1.25rem; }
 .hero--dark .wrap { position: relative; z-index: 1; }
 
 .hero-text { max-width: 34rem; }
+.hero--dark { padding-top: 0; }
 .hero-photo {
   display: block;
   width: 100%;
-  max-width: 16rem;
   height: auto;
-  border-radius: 6px;
-  margin: 2rem auto 0;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 50% 15%;
+  max-height: 32rem;
+  margin: 0 0 1.5rem;
+  -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent);
+  mask-image: linear-gradient(to bottom, black 75%, transparent);
 }
-@media (min-width: 48rem) {
-  .hero--dark { min-height: 30rem; }
+/* Side-by-side only from 64rem up: below that the 34rem text column runs
+   into the photo's fade, so tablets get the stacked layout too. */
+@media (min-width: 64rem) {
+  .hero--dark { min-height: 30rem; padding-top: 5rem; }
   .hero-photo {
     position: absolute;
     right: 0;
     top: 0;
     height: 100%;
     width: 42%;
-    max-width: none;
+    max-height: none;
     margin: 0;
     border-radius: 0;
     object-fit: cover;
