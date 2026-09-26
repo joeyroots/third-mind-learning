@@ -163,7 +163,9 @@ async function main() {
   // the dev server is not running during a check, so those self-links must be skipped.
   // example.com is the reserved documentation domain used by test fixtures;
   // skipping it keeps the fixture tests hermetic (no live-network dependency).
-  const skip = ["linkedin\\.com", "localhost:8080", "example\\.com"];
+  // pmc.ncbi.nlm.nih.gov (PubMed Central) returns 200 to a browser or curl but blocks
+  // linkinator's client, likely on request fingerprinting; verified live before skipping.
+  const skip = ["linkedin\\.com", "pmc\\.ncbi\\.nlm\\.nih\\.gov", "localhost:8080", "example\\.com"];
   if (process.env.SITE_URL) {
     skip.push(process.env.SITE_URL.replace(/^https?:\/\//, "").replace(/\./g, "\\."));
   }
