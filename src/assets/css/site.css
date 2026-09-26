@@ -223,16 +223,38 @@ footer p { max-width: var(--measure-wide); margin: 0 auto; padding: 1.5rem 1.25r
   }
 }
 
-/* Background section: photo alongside the track-record copy. */
+/* About section: a credentials rail beside the bio. The rail holds every
+   credential so the bio beats can stay about why, not what; from 48rem up
+   it sits in its own column and stays in view while the bio scrolls. */
 .bio-grid {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 .bio-grid h3:first-child { margin-top: 0; }
-@media (min-width: 40rem) {
-  .bio-grid { flex-direction: row; align-items: flex-start; gap: 2.5rem; }
-  .bio-grid .bio-photo { flex: 0 0 14rem; width: 14rem; margin: 0; }
+.credentials {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 3px solid var(--accent);
+}
+.credentials li {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+.credentials strong {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+@media (min-width: 48rem) {
+  .bio-grid { flex-direction: row; align-items: flex-start; gap: 3.5rem; }
+  .credentials { flex: 0 0 15rem; position: sticky; top: 1.5rem; }
   .bio-grid > div { flex: 1; }
 }
 
