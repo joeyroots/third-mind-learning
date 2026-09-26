@@ -1,10 +1,15 @@
 :root {
-  --measure: 42rem;
+  --measure: 44rem;
+  --measure-wide: 62rem;
   --ink: #17202a;
   --paper: #fdfcf9;
+  --paper-tint: #f4efe4;
   --muted: #5c6570;
   --accent: #2f6f5e;
+  --accent-soft: #eaf1ee;
   --rule: #e3e0d8;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
 }
 * { box-sizing: border-box; }
 html { font-size: 100%; -webkit-text-size-adjust: 100%; }
@@ -12,24 +17,74 @@ body {
   margin: 0;
   color: var(--ink);
   background: var(--paper);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.6;
 }
-main { max-width: var(--measure); margin: 0 auto; padding: 2rem 1.25rem 4rem; }
-h1, h2, h3 { line-height: 1.25; }
-h1 { font-size: 2rem; margin: 0 0 1rem; }
-h2 { font-size: 1.35rem; margin: 2.5rem 0 0.75rem; }
-h3 { font-size: 1.1rem; margin: 1.5rem 0 0.25rem; }
+/* Every page is a stack of full-bleed .hero/.section bands (for
+   background color), each holding exactly one centered .wrap. Every .wrap
+   (and the header/footer) spans the same wide container so all bands share
+   one left edge; a plain .wrap keeps a reading measure by narrowing its
+   children from the right, while .wrap--wide lets them use the full width. */
+main { margin: 0; padding: 0; }
+.wrap { max-width: var(--measure-wide); margin: 0 auto; padding: 0 1.25rem; }
+.wrap:not(.wrap--wide) > * { max-width: var(--measure); }
+h1, h2, h3 { font-family: var(--font-serif); font-weight: 600; line-height: 1.15; }
+h1 { font-size: 2.25rem; margin: 0 0 1rem; }
+h2 { font-size: 1.85rem; margin: 0 0 1rem; }
+h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; }
 p { margin: 0 0 1rem; }
 a { color: var(--accent); }
 .lede { font-size: 1.15rem; color: var(--muted); }
 .meta { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.5rem; }
+/* Hero facts: three separate items, stacked on phones and divided by a
+   short vertical rule once they fit on one line. */
+.proof-strip {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+@media (min-width: 40rem) {
+  .proof-strip { flex-direction: row; gap: 0; }
+  .proof-strip li + li { border-left: 1px solid currentColor; margin-left: 1rem; padding-left: 1rem; }
+}
+
+/* Standalone callout for a section's single most important line, pulled
+   out of paragraph flow entirely rather than styled as another sentence. */
+.statement {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  line-height: 1.35;
+  font-weight: 600;
+  margin: 2rem 0;
+}
+.statement p { margin: 0 0 0.25rem; }
+.statement p:last-child { margin-bottom: 0; }
+@media (min-width: 40rem) {
+  .statement { font-size: 1.9rem; }
+}
+
+.hero { padding: 3.5rem 0 3rem; }
+.section { padding: 3rem 0; }
+.section--tint { background: var(--paper-tint); }
+.section:last-of-type { padding-bottom: 4rem; }
+
+@media (min-width: 40rem) {
+  h1 { font-size: 3rem; }
+  h2 { font-size: 2.1rem; }
+  .hero { padding: 5rem 0 4rem; }
+  .section { padding: 4rem 0; }
+}
 
 header {
   border-bottom: 1px solid var(--rule);
 }
 header nav {
-  max-width: var(--measure);
+  max-width: var(--measure-wide);
   margin: 0 auto;
   padding: 1rem 1.25rem;
   display: flex;
@@ -53,7 +108,7 @@ footer {
   color: var(--muted);
   font-size: 0.9rem;
 }
-footer p { max-width: var(--measure); margin: 0 auto; padding: 1.5rem 1.25rem; }
+footer p { max-width: var(--measure-wide); margin: 0 auto; padding: 1.5rem 1.25rem; }
 
 .skip-link {
   position: absolute;
@@ -68,18 +123,9 @@ footer p { max-width: var(--measure); margin: 0 auto; padding: 1.5rem 1.25rem; }
 }
 
 @media (max-width: 30rem) {
-  h1 { font-size: 1.6rem; }
-  main { padding-top: 1.25rem; }
+  h1 { font-size: 1.75rem; }
 }
 
-.bio-photo {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
-  margin: 0 0 1.75rem;
-  background: var(--tint, var(--rule));
-}
 
 .button {
   display: inline-block;
@@ -93,9 +139,186 @@ footer p { max-width: var(--measure); margin: 0 auto; padding: 1.5rem 1.25rem; }
 .button:hover, .button:focus-visible { background: #255849; }
 .button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
-.quote { margin: 1.75rem 0 0; padding-left: 1.25rem; border-left: 3px solid var(--accent); }
-.quote blockquote { margin: 0; font-size: 1.1rem; }
+.quote {
+  margin: 2rem 0 0;
+  padding: 1.5rem 1.75rem;
+  background: var(--accent-soft);
+}
+.quote blockquote {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  line-height: 1.45;
+  font-style: italic;
+}
 .quote blockquote p { margin: 0 0 0.5rem; }
-.quote figcaption { color: var(--muted); font-size: 0.95rem; }
+.quote figcaption { color: var(--muted); font-size: 0.95rem; font-style: normal; }
+
+/* Lead quote: the first proof after the hero, set large on the page
+   itself rather than boxed, with the same green top rule as the
+   credentials rail. */
+.quote--lead {
+  margin: 0;
+  padding: 1.25rem 0 0;
+  background: none;
+  border-top: 3px solid var(--accent);
+}
+.quote--lead blockquote {
+  font-size: 1.45rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.4;
+}
+@media (min-width: 40rem) {
+  .quote--lead blockquote { font-size: 1.75rem; }
+}
+
+/* How section: content-mastery and state-management sit as two co-equal
+   halves, so the layout enacts the claim instead of just stating it. */
+.split {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+.split .card {
+  background: var(--paper-tint);
+  padding: 1.5rem;
+}
+.split .card h3 { margin-top: 0; }
+.split .card p:last-child { margin-bottom: 0; }
+@media (min-width: 40rem) {
+  .split { flex-direction: row; gap: 1.5rem; }
+  .split > .card { flex: 1; }
+}
+
+/* Approach opener: the statement band says states can change, and this
+   photo shows the changed state before the section explains how. Crop
+   is set by CSS so one file serves phone (4:3) and desktop (2:1). */
+.approach-photo { margin: 0 0 2.5rem; }
+.approach-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+@media (min-width: 48rem) {
+  .approach-photo img { aspect-ratio: 2 / 1; }
+}
+
+/* Hero: full-bleed dark band, photo bleeding in from the right edge with
+   a gradient fade (COD's technique), text over solid dark on the left.
+   On narrower screens the photo runs edge to edge across the top of the
+   band instead, fading into the dark at its bottom edge. */
+.hero--dark {
+  background: var(--ink);
+  color: var(--paper);
+  position: relative;
+  overflow: hidden;
+}
+.hero--dark h1 { color: var(--paper); }
+.hero--dark .lede { color: #b7c1c9; }
+.hero--dark .proof-strip { color: #8b96a0; }
+.hero--dark .wrap { position: relative; z-index: 1; }
+
+.hero-text { max-width: 34rem; }
+.hero--dark { padding-top: 0; }
+.hero-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 50% 15%;
+  max-height: 32rem;
+  margin: 0 0 1.5rem;
+  -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent);
+  mask-image: linear-gradient(to bottom, black 75%, transparent);
+}
+/* Side-by-side only from 64rem up: below that the 34rem text column runs
+   into the photo's fade, so tablets get the stacked layout too. */
+@media (min-width: 64rem) {
+  .hero--dark { min-height: 30rem; padding-top: 5rem; }
+  .hero-photo {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 42%;
+    max-height: none;
+    margin: 0;
+    border-radius: 0;
+    object-fit: cover;
+    object-position: 50% 15%;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 20%);
+    mask-image: linear-gradient(to right, transparent, black 20%);
+  }
+}
+
+/* About section: a credentials rail beside the bio. The rail holds every
+   credential so the bio beats can stay about why, not what; from 48rem up
+   it sits in its own column and stays in view while the bio scrolls. */
+.bio-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.bio-grid h3:first-child { margin-top: 0; }
+.credentials {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 3px solid var(--accent);
+}
+.credentials li {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+.credentials strong {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+@media (min-width: 48rem) {
+  .bio-grid { flex-direction: row; align-items: flex-start; gap: 3.5rem; }
+  .credentials { flex: 0 0 15rem; position: sticky; top: 1.5rem; }
+  .bio-grid > div { flex: 1; }
+}
 
 footer .disclaimer { font-size: 0.85rem; }
+
+/* "It's a state" band: the page's second dark moment after the hero.
+   The line underneath runs edge to edge, irregular and grey on the left,
+   settling into a steady green rhythm on the right: the state change the
+   statement describes. Decorative only (aria-hidden). */
+.section--dark { background: var(--ink); color: var(--paper); }
+.statement-band { padding-bottom: 0; }
+.statement-band .statement {
+  margin: 0;
+  font-size: 1.85rem;
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+.coherence-line {
+  display: block;
+  width: 100%;
+  height: 6.5rem;
+  margin-top: 2.5rem;
+}
+.coherence-line path {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+@media (min-width: 40rem) {
+  .statement-band .statement { font-size: 2.4rem; }
+  .coherence-line { height: 9rem; margin-top: 3rem; }
+}
