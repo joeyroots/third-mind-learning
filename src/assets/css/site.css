@@ -36,15 +36,22 @@ p { margin: 0 0 1rem; }
 a { color: var(--accent); }
 .lede { font-size: 1.15rem; color: var(--muted); }
 .meta { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.5rem; }
-.kicker {
-  display: block;
-  font-family: var(--font-sans);
-  font-weight: 600;
-  color: var(--accent);
+/* Hero facts: three separate items, stacked on phones and divided by a
+   short vertical rule once they fit on one line. */
+.proof-strip {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  color: var(--muted);
   font-size: 0.95rem;
-  margin: 0 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
-.proof-strip { color: var(--muted); font-size: 0.95rem; margin: 1.75rem 0 0; }
+@media (min-width: 40rem) {
+  .proof-strip { flex-direction: row; gap: 0; }
+  .proof-strip li + li { border-left: 1px solid currentColor; margin-left: 1rem; padding-left: 1rem; }
+}
 
 /* Standalone callout for a section's single most important line, pulled
    out of paragraph flow entirely rather than styled as another sentence. */
