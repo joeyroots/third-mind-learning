@@ -361,3 +361,10 @@ footer .disclaimer { font-size: 0.85rem; }
   color: var(--muted);
   margin: 0;
 }
+
+/* Long-form legal pages (privacy, terms) */
+.legal h2 { font-size: 1.4rem; margin: 2.5rem 0 0.75rem; }
+.legal h2:first-child { margin-top: 0; }
+.legal ul, .legal ol { margin: 0 0 1rem; padding-left: 1.5rem; }
+.legal li { margin-bottom: 0.4rem; }
+.legal .toc { columns: 1; }
