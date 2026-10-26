@@ -1,0 +1,14 @@
+{#- "It's a state" band: the page's second dark moment after the hero.
+    The line underneath runs edge to edge, irregular and grey on the left,
+    settling into a steady green rhythm on the right: the state change the
+    statement describes. Decorative only (aria-hidden). -#}
+<div class="section section--dark statement-band">
+  <div class="container">
+    <div class="statement">
+      {%- for line in statement %}
+      <p>{{ line | safe }}</p>
+      {%- endfor %}
+    </div>
+  </div>
+  {% include "components/coherence-line.svg.njk" %}
+</div>

@@ -1,0 +1,7 @@
+{#- Optional strip above the header. Driven by site.announcement in
+    src/_data/site.js; renders nothing unless `show` is true. -#}
+{%- if site.announcement and site.announcement.show %}
+<div class="announcement">
+  <p class="container">{{ site.announcement.text }}{% if site.announcement.href %} <a href="{{ site.announcement.href }}">{{ site.announcement.linkLabel or "Learn more" }}</a>{% endif %}</p>
+</div>
+{%- endif %}

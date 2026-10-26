@@ -1,118 +1,269 @@
+/* Third Mind Learning, v5 ("quiet authority"). Tokens come from the
+   approved design spec (vault: Website/Site Redesign — Design Spec.md).
+   Fonts are self-hosted so the CSP can stay 'self'. */
+
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/inter-latin-var.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("/assets/fonts/source-serif-4-latin-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --measure: 44rem;
-  --measure-wide: 62rem;
+  /* color */
   --ink: #17202a;
+  --ink-soft: #2a3440;
   --paper: #fdfcf9;
   --paper-tint: #f4efe4;
   --muted: #5c6570;
+  --rule: #e3e0d8;
   --accent: #2f6f5e;
   --accent-soft: #eaf1ee;
-  --rule: #e3e0d8;
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --cta: #b85a35;
+  --cta-hover: #9e4a2a;
+  --on-dark: #fdfcf9;
+  --on-dark-muted: #b7c1c9;
+  --on-dark-accent: #8fd0b6;
+  --placeholder-ink: #6b5300;
+  --placeholder-bg: #fff4cc;
+  /* type */
   --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: 1.5rem;
+  --step-3: 2rem;
+  --step-4: clamp(2.25rem, 4vw, 3rem);
+  --step-5: clamp(2.5rem, 5vw, 3.5rem);
+  /* layout */
+  --measure: 44rem;
+  --measure-wide: 62rem;
+  --container: 72rem;
+  --gutter: clamp(1rem, 4vw, 2rem);
+  --space-section: clamp(4rem, 8vw, 7rem);
+  --radius: 8px;
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 2px rgb(23 32 42 / 0.06), 0 4px 16px rgb(23 32 42 / 0.06);
+  --header-h: 4rem;
 }
+
+/* ---------- base ---------- */
 * { box-sizing: border-box; }
-html { font-size: 100%; -webkit-text-size-adjust: 100%; }
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 1rem);
+}
 body {
   margin: 0;
   color: var(--ink);
   background: var(--paper);
   font-family: var(--font-sans);
+  font-size: var(--step-0);
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
-/* Every page is a stack of full-bleed .hero/.section bands (for
-   background color), each holding exactly one centered .wrap. Every .wrap
-   (and the header/footer) spans the same wide container so all bands share
-   one left edge; a plain .wrap keeps a reading measure by narrowing its
-   children from the right, while .wrap--wide lets them use the full width. */
-main { margin: 0; padding: 0; }
-.wrap { max-width: var(--measure-wide); margin: 0 auto; padding: 0 1.25rem; }
-.wrap:not(.wrap--wide) > * { max-width: var(--measure); }
-h1, h2, h3 { font-family: var(--font-serif); font-weight: 600; line-height: 1.15; }
-h1 { font-size: 2.25rem; margin: 0 0 1rem; }
-h2 { font-size: 1.85rem; margin: 0 0 1rem; }
-h3 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; }
-p { margin: 0 0 1rem; }
-a { color: var(--accent); }
-.lede { font-size: 1.15rem; color: var(--muted); }
-.meta { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.5rem; }
-/* Hero facts: three separate items, stacked on phones and divided by a
-   short vertical rule once they fit on one line. */
-.proof-strip {
-  list-style: none;
-  margin: 1.75rem 0 0;
-  padding: 0;
-  color: var(--muted);
-  font-size: 0.95rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-@media (min-width: 40rem) {
-  .proof-strip { flex-direction: row; gap: 0; }
-  .proof-strip li + li { border-left: 1px solid currentColor; margin-left: 1rem; padding-left: 1rem; }
-}
-
-/* Standalone callout for a section's single most important line, pulled
-   out of paragraph flow entirely rather than styled as another sentence. */
-.statement {
+img, svg, picture { display: block; max-width: 100%; }
+h1, h2 {
   font-family: var(--font-serif);
-  font-size: 1.6rem;
-  line-height: 1.35;
   font-weight: 600;
-  margin: 2rem 0;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
 }
-.statement p { margin: 0 0 0.25rem; }
-.statement p:last-child { margin-bottom: 0; }
-@media (min-width: 40rem) {
-  .statement { font-size: 1.9rem; }
+h1 { font-size: var(--step-5); margin: 0 0 1.25rem; }
+h2 { font-size: var(--step-4); margin: 0 0 1.25rem; }
+h3 {
+  font-family: var(--font-sans);
+  font-size: var(--step-1);
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 2rem 0 0.5rem;
+}
+p { margin: 0 0 1rem; }
+a { color: var(--accent); text-underline-offset: 0.18em; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+strong { font-weight: 600; }
+.lede { font-size: var(--step-1); line-height: 1.5; color: var(--muted); }
+.meta { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.5rem; }
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
-.hero { padding: 3.5rem 0 3rem; }
-.section { padding: 3rem 0; }
+/* ---------- layout ----------
+   Every page is a stack of full-bleed .hero/.section bands (for background
+   color), each holding one .container. All containers share one left edge;
+   .measure narrows text to a reading width without re-centering it. */
+main { margin: 0; padding: 0; }
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.measure, .container.measure > * { max-width: var(--measure); }
+.container.measure { max-width: var(--container); }
+.section { padding: var(--space-section) 0; }
 .section--tint { background: var(--paper-tint); }
-.section:last-of-type { padding-bottom: 4rem; }
+.section--dark { background: var(--ink); color: var(--on-dark); }
+.section--dark h2 { color: var(--on-dark); }
+.hero { padding: clamp(3rem, 7vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem); }
 
-@media (min-width: 40rem) {
-  h1 { font-size: 3rem; }
-  h2 { font-size: 2.1rem; }
-  .hero { padding: 5rem 0 4rem; }
-  .section { padding: 4rem 0; }
+/* ---------- buttons & links ---------- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.75rem 1.6rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--cta);
+  color: #fff;
+  font: 600 var(--step-0) / 1.2 var(--font-sans);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
 }
+.button:hover { background: var(--cta-hover); }
+.button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.section--dark .button:focus-visible,
+.hero--dark .button:focus-visible { outline-color: var(--on-dark); }
+.button:disabled { background: var(--muted); cursor: not-allowed; }
+.button--small { min-height: 2.5rem; padding: 0.5rem 1.1rem; font-size: 0.9375rem; }
+.text-link { font-weight: 600; }
 
-header {
+/* ---------- placeholder marking (prototype only) ---------- */
+.placeholder-tag {
+  display: inline-block;
+  margin: 0 0 1rem;
+  padding: 0.2rem 0.65rem;
+  border: 1px dashed var(--placeholder-ink);
+  border-radius: 4px;
+  background: var(--placeholder-bg);
+  color: var(--placeholder-ink);
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+.is-placeholder { color: var(--muted); font-style: italic; }
+
+/* ---------- announcement bar ---------- */
+.announcement { background: var(--accent); color: #fff; font-size: var(--step--1); }
+.announcement p { margin: 0; padding: 0.5rem var(--gutter); text-align: center; }
+.announcement a { color: #fff; font-weight: 600; }
+
+/* ---------- header ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--paper);
   border-bottom: 1px solid var(--rule);
 }
-header nav {
-  max-width: var(--measure-wide);
-  margin: 0 auto;
-  padding: 1rem 1.25rem;
+.site-header__bar {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.5rem 1.5rem;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  min-height: var(--header-h);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
-.site-name { font-weight: 700; text-decoration: none; color: var(--ink); }
-header ul {
+.site-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-right: auto;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.site-name__mark { width: 1.75rem; height: 1.75rem; flex: none; }
+.site-name__mark rect { fill: var(--accent); }
+.site-name__mark path { fill: none; stroke: var(--paper); stroke-width: 6; stroke-linecap: round; }
+.site-nav {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1.25rem;
+  gap: 0.25rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
 }
-header a[aria-current="page"] { font-weight: 700; text-decoration: none; }
+.site-nav a { color: var(--ink); text-decoration: none; padding: 0.35rem 0; }
+.site-nav a:hover { color: var(--accent); }
+.site-nav a[aria-current="page"] {
+  color: var(--accent);
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+.menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+.menu-toggle svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.menu-toggle[aria-expanded="true"] .menu-toggle__open,
+.menu-toggle[aria-expanded="false"] .menu-toggle__close { display: none; }
 
-footer {
-  border-top: 1px solid var(--rule);
-  color: var(--muted);
-  font-size: 0.9rem;
+/* Phones and small tablets: logo, CTA and menu button on one row; the nav
+   drops below as a full-width list when opened. */
+@media (max-width: 55.99rem) {
+  .site-header__bar { gap: 0.5rem; }
+  .site-name { gap: 0.45rem; font-size: 1rem; }
+  .site-name__mark { width: 1.5rem; height: 1.5rem; }
+  .site-header__cta { min-height: 2.5rem; padding: 0.45rem 0.9rem; font-size: 0.875rem; }
+  .site-header__cta { order: 1; }
+  .menu-toggle { order: 2; }
+  .has-menu-js .menu-toggle { display: inline-flex; }
+  .site-nav {
+    order: 3;
+    flex-basis: 100%;
+    flex-direction: column;
+    gap: 0;
+    padding: 0.25rem 0 0.5rem;
+  }
+  .site-nav li + li { border-top: 1px solid var(--rule); }
+  .site-nav a { display: block; padding: 0.75rem 0; }
+  .site-nav a[aria-current="page"] { box-shadow: none; }
+  .has-menu-js .menu-toggle[aria-expanded="false"] ~ .site-nav { display: none; }
 }
-footer p { max-width: var(--measure-wide); margin: 0 auto; padding: 1.5rem 1.25rem; }
+@media (max-width: 22.5rem) {
+  .site-name__mark { display: none; }
+}
+@media (min-width: 56rem) {
+  .site-header__bar { flex-wrap: nowrap; gap: 2rem; }
+}
 
 .skip-link {
   position: absolute;
   left: -9999px;
+  z-index: 20;
 }
 .skip-link:focus {
   left: 1rem;
@@ -122,150 +273,266 @@ footer p { max-width: var(--measure-wide); margin: 0 auto; padding: 1.5rem 1.25r
   border: 2px solid var(--accent);
 }
 
-@media (max-width: 30rem) {
-  h1 { font-size: 1.75rem; }
+/* ---------- hero (home) ----------
+   Full-bleed dark band, portrait bleeding in from the right edge with a
+   gradient fade, text over solid dark on the left. Below 64rem the photo
+   runs edge to edge across the top of the band instead. */
+.hero--dark {
+  position: relative;
+  overflow: hidden;
+  padding-top: 0;
+  background: var(--ink);
+  color: var(--on-dark);
+}
+.hero--dark h1 { color: var(--on-dark); }
+.hero--dark .lede { color: var(--on-dark-muted); }
+.hero--dark .text-link { color: var(--on-dark-accent); }
+.hero__inner { position: relative; z-index: 1; }
+.hero__text { max-width: 36rem; }
+.hero__photo img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 5 / 4;
+  max-height: 26rem;
+  object-fit: cover;
+  object-position: 50% 12%;
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
+  mask-image: linear-gradient(to bottom, #000 70%, transparent);
+}
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  margin: 1.75rem 0 0;
+}
+@media (min-width: 64rem) {
+  .hero--dark { min-height: 34rem; padding: 6rem 0 5rem; }
+  .hero__photo {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 44%;
+    height: 100%;
+  }
+  .hero__photo img {
+    height: 100%;
+    max-height: none;
+    aspect-ratio: auto;
+    object-position: 50% 15%;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 22%);
+    mask-image: linear-gradient(to right, transparent, #000 22%);
+  }
 }
 
-
-.button {
-  display: inline-block;
-  padding: 0.7rem 1.4rem;
-  border-radius: 6px;
-  background: var(--accent);
-  color: var(--paper);
-  font-weight: 600;
-  text-decoration: none;
-}
-.button:hover, .button:focus-visible { background: #255849; }
-.button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
-
-.quote {
+/* Proof chips: facts about the practice, each with a small line icon. */
+.proof-strip {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
   margin: 2rem 0 0;
-  padding: 1.5rem 1.75rem;
-  background: var(--accent-soft);
+  padding: 0;
+  font-size: var(--step--1);
+  font-weight: 500;
 }
-.quote blockquote {
-  margin: 0;
-  font-family: var(--font-serif);
-  font-size: 1.3rem;
-  line-height: 1.45;
-  font-style: italic;
+.proof-strip li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem 0.4rem 0.65rem;
+  border: 1px solid rgb(253 252 249 / 0.18);
+  border-radius: var(--radius-pill);
+  color: var(--on-dark);
 }
-.quote blockquote p { margin: 0 0 0.5rem; }
-.quote figcaption { color: var(--muted); font-size: 0.95rem; font-style: normal; }
+.proof-strip .icon { width: 1.1rem; height: 1.1rem; color: var(--on-dark-accent); }
+.icon { fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
 
-/* Lead quote: the first proof after the hero, set large on the page
-   itself rather than boxed, with the same green top rule as the
-   credentials rail. */
-.quote--lead {
+/* ---------- inner-page hero ---------- */
+.hero--page { border-bottom: 1px solid var(--rule); }
+.hero--tight { padding-bottom: 1.5rem; border-bottom: 0; }
+.section--tight { padding-top: 0.5rem; }
+
+/* ---------- lead quote ---------- */
+.section--quote { padding: clamp(3rem, 6vw, 5rem) 0; }
+.quote-lead {
+  max-width: 52rem;
   margin: 0;
-  padding: 1.25rem 0 0;
-  background: none;
+  padding-top: 1.5rem;
   border-top: 3px solid var(--accent);
 }
-.quote--lead blockquote {
-  font-size: 1.45rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.4;
+.quote-lead blockquote { margin: 0; }
+.quote-lead blockquote p {
+  margin: 0 0 1rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+  font-weight: 600;
+  line-height: 1.35;
+  text-wrap: pretty;
 }
-@media (min-width: 40rem) {
-  .quote--lead blockquote { font-size: 1.75rem; }
-}
+.quote-lead figcaption { color: var(--muted); font-size: 0.95rem; }
+.quote-lead--small blockquote p { font-size: clamp(1.2rem, 2vw, 1.4rem); }
 
-/* How section: content-mastery and state-management sit as two co-equal
-   halves, so the layout enacts the claim instead of just stating it. */
-.split {
+/* ---------- symptom list ---------- */
+.symptoms { display: grid; gap: 1.5rem 4rem; }
+.symptoms__kicker {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--step-2);
+  font-weight: 600;
+  color: var(--accent);
+}
+.symptoms__body { max-width: var(--measure); }
+.symptoms__body h3:first-of-type { margin-top: 2.5rem; }
+.checklist { list-style: none; margin: 0; padding: 0; }
+.checklist li {
   display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  margin: 1.5rem 0;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--step-1);
+  line-height: 1.45;
 }
-.split .card {
-  background: var(--paper-tint);
-  padding: 1.5rem;
+.checklist li:first-child { padding-top: 0; }
+.checklist .icon {
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0.3rem;
+  margin-top: 0.05rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  stroke-width: 2.5;
 }
-.split .card h3 { margin-top: 0; }
-.split .card p:last-child { margin-bottom: 0; }
-@media (min-width: 40rem) {
-  .split { flex-direction: row; gap: 1.5rem; }
-  .split > .card { flex: 1; }
+@media (min-width: 56rem) {
+  .symptoms { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
 }
 
-/* Approach opener: the statement band says states can change, and this
-   photo shows the changed state before the section explains how. Crop
-   is set by CSS so one file serves phone (4:3) and desktop (2:1). */
-.approach-photo { margin: 0 0 2.5rem; }
-.approach-photo img {
-  display: block;
+/* ---------- statement band ----------
+   The page's second dark moment after the hero. The line underneath runs
+   edge to edge, irregular and grey on the left, settling into a steady
+   green rhythm on the right: the state change the statement describes. */
+.statement-band { padding-bottom: 0; }
+.statement {
+  max-width: 50rem;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 3.6vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1.25;
+  text-wrap: pretty;
+}
+.statement p { margin: 0 0 0.35rem; }
+.statement p:last-child { margin-bottom: 0; color: var(--on-dark-accent); }
+.coherence-line {
+  width: 100%;
+  height: clamp(6.5rem, 12vw, 10rem);
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+.coherence-line path {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* ---------- contrast table ---------- */
+.contrast__photo { margin: 0 0 clamp(2.5rem, 5vw, 4rem); }
+.contrast__photo img {
   width: 100%;
   height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
   object-position: 50% 30%;
+  border-radius: var(--radius);
 }
 @media (min-width: 48rem) {
-  .approach-photo img { aspect-ratio: 2 / 1; }
+  .contrast__photo img { aspect-ratio: 21 / 9; }
 }
-
-/* Hero: full-bleed dark band, photo bleeding in from the right edge with
-   a gradient fade (COD's technique), text over solid dark on the left.
-   On narrower screens the photo runs edge to edge across the top of the
-   band instead, fading into the dark at its bottom edge. */
-.hero--dark {
-  background: var(--ink);
-  color: var(--paper);
-  position: relative;
-  overflow: hidden;
-}
-.hero--dark h1 { color: var(--paper); }
-.hero--dark .lede { color: #b7c1c9; }
-.hero--dark .proof-strip { color: #8b96a0; }
-.hero--dark .wrap { position: relative; z-index: 1; }
-
-.hero-text { max-width: 34rem; }
-.hero--dark { padding-top: 0; }
-.hero-photo {
-  display: block;
+.contrast__wrap { margin: 2rem 0; }
+.contrast__table {
   width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  object-position: 50% 15%;
-  max-height: 32rem;
-  margin: 0 0 1.5rem;
-  -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent);
-  mask-image: linear-gradient(to bottom, black 75%, transparent);
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  font-size: var(--step-0);
 }
-/* Side-by-side only from 64rem up: below that the 34rem text column runs
-   into the photo's fade, so tablets get the stacked layout too. */
-@media (min-width: 64rem) {
-  .hero--dark { min-height: 30rem; padding-top: 5rem; }
-  .hero-photo {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 42%;
-    max-height: none;
-    margin: 0;
-    border-radius: 0;
-    object-fit: cover;
-    object-position: 50% 15%;
-    -webkit-mask-image: linear-gradient(to right, transparent, black 20%);
-    mask-image: linear-gradient(to right, transparent, black 20%);
+.contrast__table thead td { width: 22%; }
+.contrast__table th,
+.contrast__table td {
+  padding: 1.1rem 1.25rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--rule);
+}
+.contrast__table thead th {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--muted);
+}
+.contrast__table thead .contrast__ours {
+  color: var(--accent);
+  border-top: 3px solid var(--accent);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.contrast__table tbody th {
+  font-family: var(--font-serif);
+  font-size: var(--step-1);
+  font-weight: 600;
+  line-height: 1.3;
+}
+.contrast__table td { color: var(--muted); }
+.contrast__table .contrast__ours { background: var(--accent-soft); color: var(--ink); }
+.contrast__table tbody tr:last-child .contrast__ours { border-radius: 0 0 var(--radius) var(--radius); }
+.contrast__close { font-family: var(--font-serif); font-size: var(--step-2); font-weight: 600; line-height: 1.35; }
+
+/* Below 40rem each row becomes a small stacked block; the column name
+   travels with each cell via data-col. */
+@media (max-width: 39.99rem) {
+  .contrast__table, .contrast__table tbody, .contrast__table tr,
+  .contrast__table th, .contrast__table td { display: block; width: auto; }
+  .contrast__table thead { display: none; }
+  .contrast__table tr { margin-bottom: 1.5rem; }
+  .contrast__table tbody th { padding: 0 0 0.5rem; border: 0; }
+  .contrast__table td { padding: 0.85rem 1rem; border: 0; }
+  .contrast__table td::before {
+    content: attr(data-col);
+    display: block;
+    margin-bottom: 0.2rem;
+    font-size: var(--step--1);
+    font-weight: 600;
+    font-style: normal;
+    color: var(--muted);
   }
+  .contrast__table td.contrast__ours::before { color: var(--accent); }
+  .contrast__table .contrast__ours,
+  .contrast__table tbody tr:last-child .contrast__ours { border-radius: var(--radius); }
 }
 
-/* About section: a credentials rail beside the bio. The rail holds every
-   credential so the bio beats can stay about why, not what; from 48rem up
-   it sits in its own column and stays in view while the bio scrolls. */
-.bio-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+/* ---------- founder ---------- */
+.founder { display: grid; gap: 2rem 3.5rem; align-items: start; }
+.founder__photo img {
+  width: 100%;
+  max-width: 12rem;
+  height: auto;
+  border-radius: var(--radius);
 }
-.bio-grid h3:first-child { margin-top: 0; }
+@media (min-width: 48rem) {
+  .founder__photo img { max-width: 18rem; }
+}
+.founder__story { max-width: var(--measure); }
+@media (min-width: 48rem) {
+  .founder { grid-template-columns: 15rem minmax(0, 1fr); }
+  .founder .credentials { grid-column: 2; }
+}
+@media (min-width: 72rem) {
+  .founder { grid-template-columns: 15rem minmax(0, 1fr) 17rem; }
+  .founder .credentials { grid-column: 3; }
+}
+
+/* Credentials rail (home founder + About). */
 .credentials {
   list-style: none;
   margin: 0;
@@ -276,67 +543,150 @@ footer p { max-width: var(--measure-wide); margin: 0 auto; padding: 1.5rem 1.25r
   padding: 0.85rem 0;
   border-bottom: 1px solid var(--rule);
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
   line-height: 1.45;
 }
 .credentials strong {
   display: block;
+  color: var(--ink);
   font-family: var(--font-serif);
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--ink);
 }
+
+/* ---------- testimonial cards ---------- */
+.testimonials {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1.25rem;
+  margin: 2rem 0 0;
+  padding: 0;
+}
+.testimonial {
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+.testimonial figure { display: flex; flex: 1; flex-direction: column; margin: 0; }
+.testimonial blockquote { flex: 1; margin: 0 0 1.25rem; }
+.testimonial blockquote p { margin: 0; font-size: var(--step-0); line-height: 1.6; }
+.testimonial figcaption { padding-top: 1rem; border-top: 1px solid var(--rule); font-size: 0.9375rem; }
+.testimonial__name { display: block; font-weight: 600; }
+.testimonial__role { color: var(--muted); }
+.testimonial.is-placeholder {
+  background: transparent;
+  border-style: dashed;
+  box-shadow: none;
+  font-style: normal;
+}
+.testimonial.is-placeholder .placeholder-tag { align-self: flex-start; }
+
+/* ---------- FAQ ---------- */
+.faq { display: grid; gap: 1.5rem 4rem; }
+.faq__list { max-width: var(--measure); border-top: 1px solid var(--rule); }
+.faq details { border-bottom: 1px solid var(--rule); }
+.faq summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.15rem 0;
+  font-size: var(--step-1);
+  font-weight: 600;
+  line-height: 1.35;
+  cursor: pointer;
+  list-style: none;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "";
+  flex: none;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-top: 0.4rem;
+  border-right: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+.faq details[open] summary::after { transform: rotate(225deg); margin-top: 0.7rem; }
+.faq summary:hover { color: var(--accent); }
+.faq__answer { padding: 0 2rem 1.25rem 0; color: var(--muted); }
+.faq__answer p:last-child { margin-bottom: 0; }
+@media (min-width: 56rem) {
+  .faq { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+}
+
+/* ---------- lead magnet ---------- */
+.lead-magnet { display: grid; gap: 2rem 4rem; align-items: center; }
+.lead-magnet__cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: min(100%, 10rem);
+  aspect-ratio: 3 / 4;
+  padding: 1.5rem 1.25rem;
+  border-radius: 4px var(--radius) var(--radius) 4px;
+  background: var(--ink);
+  color: var(--on-dark);
+  box-shadow: inset 6px 0 0 var(--accent), var(--shadow-card);
+}
+.lead-magnet__mark { width: 2.5rem; }
+.lead-magnet__mark path { fill: none; stroke: var(--on-dark-accent); stroke-width: 5; stroke-linecap: round; }
+.lead-magnet__cover-title { font-family: var(--font-serif); font-size: 1.35rem; font-weight: 600; line-height: 1.2; }
+.lead-magnet__cover-brand { font-size: 0.75rem; color: var(--on-dark-muted); }
+.lead-magnet__body { max-width: var(--measure); }
+.lead-magnet__body h2 { font-size: var(--step-3); }
+.lead-magnet__form label { display: block; margin-bottom: 0.4rem; font-size: 0.9375rem; font-weight: 600; }
+.lead-magnet__row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.lead-magnet__row input {
+  flex: 1 1 14rem;
+  min-height: 3rem;
+  padding: 0.6rem 1rem;
+  border: 1px solid #8a8f96;
+  border-radius: var(--radius-pill);
+  background: #fff;
+  font: inherit;
+}
+.lead-magnet__row input:disabled { background: var(--paper-tint); }
 @media (min-width: 48rem) {
-  .bio-grid { flex-direction: row; align-items: flex-start; gap: 3.5rem; }
-  .credentials { flex: 0 0 15rem; position: sticky; top: 1.5rem; }
-  .bio-grid > div { flex: 1; }
+  .lead-magnet { grid-template-columns: 14rem minmax(0, 1fr); }
+  .lead-magnet__cover { width: 14rem; }
 }
 
-footer .disclaimer { font-size: 0.85rem; }
+/* ---------- closing CTA band ---------- */
+.cta-band p { color: var(--on-dark-muted); font-size: var(--step-1); }
+.cta-band .button { margin-top: 0.5rem; }
+.cta-band .cta-band__note { margin-top: 1.5rem; font-size: 0.9375rem; }
 
-/* "It's a state" band: the page's second dark moment after the hero.
-   The line underneath runs edge to edge, irregular and grey on the left,
-   settling into a steady green rhythm on the right: the state change the
-   statement describes. Decorative only (aria-hidden). */
-.section--dark { background: var(--ink); color: var(--paper); }
-.statement-band { padding-bottom: 0; }
-.statement-band .statement {
-  margin: 0;
-  font-size: 1.85rem;
-  line-height: 1.3;
-  text-wrap: pretty;
+/* ---------- About ---------- */
+.about-hero { background: var(--paper-tint); }
+.about-hero__inner { display: grid; gap: 2rem 4rem; align-items: center; }
+.about-hero__text { max-width: var(--measure); }
+.about-hero__photo img { width: 100%; max-width: 20rem; height: auto; border-radius: var(--radius); }
+@media (min-width: 48rem) {
+  .about-hero__inner { grid-template-columns: minmax(0, 1fr) 18rem; }
 }
-.coherence-line {
-  display: block;
-  width: 100%;
-  height: 6.5rem;
-  margin-top: 2.5rem;
+.bio-grid { display: grid; gap: 2.5rem 4rem; align-items: start; }
+.bio-grid__body { max-width: var(--measure); }
+.bio-grid__body h2 { font-size: var(--step-3); margin-top: 2.5rem; }
+.bio-grid__body h2:first-child { margin-top: 0; }
+@media (min-width: 48rem) {
+  .bio-grid { grid-template-columns: 16rem minmax(0, 1fr); }
+  .bio-grid .credentials { position: sticky; top: calc(var(--header-h) + 1.5rem); }
 }
-.coherence-line path {
-  fill: none;
-  stroke-width: 2;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
-}
-.hl-form-embed {
-  width: 100%;
-  height: 687px;
-  border: none;
-  border-radius: 8px;
+.about-split { display: grid; gap: 2rem 4rem; align-items: center; margin-top: 3rem; }
+.about-photo { margin: 0; }
+.about-photo img { width: 100%; max-width: 28rem; height: auto; border-radius: var(--radius); }
+@media (min-width: 48rem) {
+  .about-split { grid-template-columns: 24rem minmax(0, 1fr); }
 }
 
-/* Contact page: pull the form up closer to the intro copy than the
-   default .hero/.section stack allows, so it clears the fold sooner. */
-.hero--tight { padding-bottom: 1.5rem; }
-.section--tight { padding-top: 1rem; }
-
-@media (min-width: 40rem) {
-  .statement-band .statement { font-size: 2.4rem; }
-  .coherence-line { height: 9rem; margin-top: 3rem; }
-}
-
-/* Research page: a study's own published figures, set apart from its
-   plain-language summary so a skimming reader still catches the numbers. */
+/* ---------- Research ---------- */
 .study-stats {
   display: flex;
   flex-wrap: wrap;
@@ -347,24 +697,58 @@ footer .disclaimer { font-size: 0.85rem; }
   flex: 1 1 11rem;
   padding: 0.85rem 1.1rem;
   background: var(--accent-soft);
-  border-radius: 0.5rem;
+  border-radius: var(--radius);
 }
+.section--tint .stat { background: var(--paper); }
 .stat-value {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 1.5rem;
-  color: var(--accent);
   margin: 0 0 0.15rem;
+  color: var(--accent);
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
-.stat-label {
-  font-size: 0.85rem;
-  color: var(--muted);
-  margin: 0;
+.stat-label { margin: 0; color: var(--muted); font-size: 0.85rem; }
+.measure h3 { font-size: var(--step-1); margin-top: 3rem; }
+.measure h2 + h3 { margin-top: 1.5rem; }
+
+/* ---------- Contact ---------- */
+/* The GHL embed script hides/collapses the iframe while the form loads,
+   then sizes it to 719px at every width. The wrapper holds that height so
+   the footer never moves (CLS). Re-measure if the form's fields change. */
+.hl-form-slot { min-height: 719px; max-width: var(--measure); }
+.hl-form-embed {
+  display: block;
+  width: 100%;
+  height: 719px;
+  border: none;
+  border-radius: var(--radius);
 }
 
-/* Long-form legal pages (privacy, terms) */
+/* ---------- Legal (privacy, terms) ---------- */
 .legal h2 { font-size: 1.4rem; margin: 2.5rem 0 0.75rem; }
 .legal h2:first-child { margin-top: 0; }
 .legal ul, .legal ol { margin: 0 0 1rem; padding-left: 1.5rem; }
 .legal li { margin-bottom: 0.4rem; }
 .legal .toc { columns: 1; }
+
+/* ---------- footer ---------- */
+.site-footer { background: var(--paper-tint); border-top: 1px solid var(--rule); color: var(--muted); font-size: 0.9375rem; }
+.site-footer__inner {
+  display: grid;
+  gap: 1rem 3rem;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+.site-footer__name { margin: 0; color: var(--ink); font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600; }
+.site-footer__links { list-style: none; display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; margin: 0; padding: 0; }
+.site-footer__links a { color: var(--ink); }
+.site-footer__legal { margin: 0; }
+.site-footer .disclaimer { font-size: 0.85rem; }
+@media (min-width: 48rem) {
+  .site-footer__inner { grid-template-columns: auto 1fr; align-items: baseline; }
+  .site-footer__legal { grid-column: 1 / -1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}

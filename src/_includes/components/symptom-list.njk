@@ -1,0 +1,23 @@
+{#- "Sound familiar?" as a checklist a parent can tick against their own
+    teen, followed by the short why. -#}
+{%- from "components/icon.njk" import icon -%}
+<div class="section section--tint">
+  <div class="container symptoms">
+    <div class="symptoms__head">
+      <h2>{{ symptoms.heading | safe }}</h2>
+      <p class="symptoms__kicker">{{ symptoms.kicker | safe }}</p>
+    </div>
+    <div class="symptoms__body">
+      {%- if symptoms.restructured %}
+      <!-- CONTENT: list items are the V4 "Sound familiar?" paragraphs split into bullets; confirm wording in the copy round. -->
+      {%- endif %}
+      <ul class="checklist">
+        {%- for item in symptoms.items %}
+        <li>{{ icon("check") | safe }}<span>{{ item | safe }}</span></li>
+        {%- endfor %}
+      </ul>
+      <h3>{{ symptoms.whyHeading }}</h3>
+      <p>{{ symptoms.why | safe }}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+{#- Icon + short fact chips. Facts about the practice only: no numbers
+    that imply student outcomes (see tml-compliance-no-score-claims). -#}
+{%- from "components/icon.njk" import icon -%}
+<ul class="proof-strip">
+  {%- for item in proof %}
+  <li>{{ icon(item.icon) | safe }}<span>{{ item.text | safe }}</span></li>
+  {%- endfor %}
+</ul>

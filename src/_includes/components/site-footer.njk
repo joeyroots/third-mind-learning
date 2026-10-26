@@ -1,0 +1,14 @@
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <p class="site-footer__name">{{ site.title }}</p>
+    <ul class="site-footer__links">
+      {%- for entry in collections.navPages %}
+      <li><a href="{{ entry.url }}">{{ entry.data.eleventyNavigation.key }}</a></li>
+      {%- endfor %}
+      <li><a href="/privacy/">Privacy</a></li>
+      <li><a href="/terms/">Terms</a></li>
+    </ul>
+    <p class="site-footer__legal">&copy; {{ site.buildYear }} {{ site.author }}<br>
+    <span class="disclaimer">Coaching and education, not medical or mental-health treatment.</span></p>
+  </div>
+</footer>
