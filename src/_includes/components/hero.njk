@@ -1,0 +1,25 @@
+{#- Dark hero band: headline, subhead, primary CTA + secondary text link,
+    proof chips, and the portrait bleeding in from the right (stacked on
+    top below 64rem). The portrait is the mobile LCP element, so it loads
+    eagerly at high priority and the page preloads its AVIF. -#}
+{%- set proof = hero.proof -%}
+<div class="hero hero--dark">
+  <picture class="hero__photo">
+    <source type="image/avif" srcset="/assets/img/joe-ruotolo-hero-480.avif 480w, /assets/img/joe-ruotolo-hero-929.avif 929w" sizes="(min-width: 64rem) 42vw, 100vw">
+    <source type="image/webp" srcset="/assets/img/joe-ruotolo-hero-480.webp 480w, /assets/img/joe-ruotolo-hero-929.webp 929w" sizes="(min-width: 64rem) 42vw, 100vw">
+    <img src="/assets/img/joe-ruotolo-hero-929.jpg" srcset="/assets/img/joe-ruotolo-hero-480.jpg 480w, /assets/img/joe-ruotolo-hero-929.jpg 929w" sizes="(min-width: 64rem) 42vw, 100vw" alt="{{ hero.photoAlt }}" width="929" height="1000" fetchpriority="high">
+  </picture>
+  <div class="container hero__inner">
+    <div class="hero__text">
+      <h1>{{ hero.title | safe }}</h1>
+      <p class="lede">{{ hero.lede | safe }}</p>
+      <p class="hero__actions">
+        <a class="button" href="{{ hero.cta.href }}">{{ hero.cta.label }}</a>
+        {%- if hero.secondary %}
+        <a class="text-link" href="{{ hero.secondary.href }}">{{ hero.secondary.label }}</a>
+        {%- endif %}
+      </p>
+      {% include "components/proof-strip.njk" %}
+    </div>
+  </div>
+</div>

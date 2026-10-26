@@ -1,0 +1,16 @@
+{#- Closing band. The free clarity call is the offer; the button reads
+    "Get in touch" until the video funnel is live. -#}
+<div class="section section--dark cta-band">
+  <div class="container">
+    <div class="measure">
+      <h2>{{ ctaBand.heading | safe }}</h2>
+      {%- for para in ctaBand.body %}
+      <p>{{ para | safe }}</p>
+      {%- endfor %}
+      <p><a class="button" href="{{ ctaBand.cta.href }}">{{ ctaBand.cta.label }}</a></p>
+      {%- if ctaBand.note %}
+      <p class="cta-band__note">{{ ctaBand.note | safe }}</p>
+      {%- endif %}
+    </div>
+  </div>
+</div>

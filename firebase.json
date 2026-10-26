@@ -47,9 +47,6 @@
           }
         ]
       }
-    ],
-    "redirects": [
-      { "source": "/about/", "destination": "/research/", "type": 301 }
     ]
   }
 }

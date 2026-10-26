@@ -1,0 +1,22 @@
+{#- The founder is the credential for a solo practice: portrait,
+    credentials rail, the short "why I built this" story, link to About. -#}
+<div class="section section--tint">
+  <div class="container founder">
+    <picture class="founder__photo">
+      <source type="image/avif" srcset="/assets/img/joe-ruotolo-portrait.avif">
+      <source type="image/webp" srcset="/assets/img/joe-ruotolo-portrait.webp">
+      <img src="/assets/img/joe-ruotolo-portrait.jpg" alt="Joe Ruotolo" width="480" height="600" loading="lazy" decoding="async">
+    </picture>
+    <div class="founder__story">
+      <h2>{{ founder.heading | safe }}</h2>
+      {%- for para in founder.story %}
+      <p>{{ para | safe }}</p>
+      {%- endfor %}
+      {%- if founder.link %}
+      <p><a class="text-link" href="{{ founder.link.href }}">{{ founder.link.label }}</a></p>
+      {%- endif %}
+    </div>
+    {%- set credentials = founder.credentials %}
+    {% include "components/credentials.njk" %}
+  </div>
+</div>

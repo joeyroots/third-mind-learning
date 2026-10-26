@@ -1,0 +1,79 @@
+---
+layout: layouts/base.njk
+title: "About Joe Ruotolo — Third Mind Learning"
+description: "Joe Ruotolo, founder of Third Mind Learning: math and physics background, 150+ SAT and ACT students coached, and a Certified HeartMath® Trainer."
+eleventyNavigation:
+  key: About
+  order: 2
+credentials:
+  - { title: "150+ students coached", detail: "SAT and ACT" }
+  - { title: "BA Physics, BS Mathematics", detail: "State University of New York at New Paltz" }
+  - { title: "University lecturer", detail: "Mathematics at SUNY New Paltz" }
+  - { title: "Years at an elite test-prep firm", detail: "New York" }
+  - { title: "MBA", detail: "UCLA Anderson" }
+  - { title: "Certified HeartMath&reg; Trainer" }
+ctaBand:
+  heading: "Start with a conversation"
+  body:
+    - "Tell me where your teen is and what test day has looked like so far. We'll talk through whether this is the right fit and what the next step would be."
+  cta: { label: "Get in touch", href: "/contact/" }
+---
+<!-- CONTENT: About page layout for the prototype. Body text is the existing V4 bio; the first-person founder story is written in the copy round with Joe. -->
+<div class="hero about-hero">
+  <div class="container about-hero__inner">
+    <div class="about-hero__text">
+      <h1>About Joe Ruotolo</h1>
+      <p class="lede">I'm Joe Ruotolo. I've worked with a lot of students, and I've seen months of preparation come undone because a student walked into the test dysregulated, with no tools to get their head back in the game.</p>
+      <p>I built Third Mind Learning to solve that problem, so students walk in with both the knowledge and the state-management skills they need to perform at their best.</p>
+    </div>
+    <picture class="about-hero__photo">
+      <source type="image/avif" srcset="/assets/img/joe-ruotolo-portrait.avif">
+      <source type="image/webp" srcset="/assets/img/joe-ruotolo-portrait.webp">
+      <img src="/assets/img/joe-ruotolo-portrait.jpg" alt="Joe Ruotolo" width="480" height="600" fetchpriority="high">
+    </picture>
+  </div>
+</div>
+
+<div class="section section--tint">
+  <div class="container bio-grid">
+    {% include "components/credentials.njk" %}
+    <div class="bio-grid__body">
+      <h2>Track record</h2>
+      <p>I've worked with more than 150 students on the SAT and ACT. Many of them came to me anxious and overwhelmed by math and test-taking. I didn't start with this approach as a theory. Working with those students is what led me to build it.</p>
+
+      <h2>How I work</h2>
+      <p>I had great mentors as a student, and I owe a lot of my path to them. That's the role I take with every student: a guide in their corner who knows the territory.</p>
+
+      <h2>Beyond test day</h2>
+      <p>Test day matters, but it was never the whole point. The skills that steady a student on test day are the ones they'll carry into every high-stakes moment after it.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="container">
+    <div class="measure">
+      {% include "components/placeholder-tag.njk" %}
+      <h2>Why heart coherence</h2>
+      <!-- CONTENT: why Joe trained as a HeartMath® Trainer and why he built it into test prep. -->
+      <p>[Placeholder: why heart coherence, in Joe's words. The <a href="/research/">research page</a> covers the published studies.]</p>
+    </div>
+    <div class="about-split">
+    <figure class="about-photo">
+      <picture>
+        <source type="image/avif" srcset="/assets/img/joe-ruotolo-hero-480.avif 480w, /assets/img/joe-ruotolo-hero-929.avif 929w" sizes="(min-width: 48rem) 28rem, 100vw">
+        <source type="image/webp" srcset="/assets/img/joe-ruotolo-hero-480.webp 480w, /assets/img/joe-ruotolo-hero-929.webp 929w" sizes="(min-width: 48rem) 28rem, 100vw">
+        <img src="/assets/img/joe-ruotolo-hero-929.jpg" srcset="/assets/img/joe-ruotolo-hero-480.jpg 480w, /assets/img/joe-ruotolo-hero-929.jpg 929w" sizes="(min-width: 48rem) 28rem, 100vw" alt="Joe Ruotolo speaking on stage" width="929" height="1000" loading="lazy" decoding="async">
+      </picture>
+    </figure>
+    <figure class="quote-lead quote-lead--small">
+      <blockquote>
+        <p>&ldquo;Joe tutored my two boys, 16 and 14, over the past few years&hellip; As a busy mom and CEO, I appreciated Joe's engaging, effective teaching and his patience and wisdom. Joe has opened so many opportunities for them. Highly recommend!&rdquo;</p>
+      </blockquote>
+      <figcaption>Christina M, Parent</figcaption>
+    </figure>
+    </div>
+  </div>
+</div>
+
+{% include "components/cta-band.njk" %}

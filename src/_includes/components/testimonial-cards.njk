@@ -1,0 +1,26 @@
+{#- Parent and student quotes as cards. Qualitative only: no scores,
+    point gains or result-bearing claims (tml-compliance-no-score-claims). -#}
+<div class="section">
+  <div class="container">
+    <div class="measure">
+      <h2>{{ testimonials.heading | safe }}</h2>
+      {%- if testimonials.headingPlaceholder %}
+      <!-- CONTENT: section heading is a placeholder. -->
+      {%- endif %}
+    </div>
+    <ul class="testimonials">
+      {%- for t in testimonials.items %}
+      <li class="testimonial{% if t.placeholder %} is-placeholder{% endif %}">
+        {%- if t.placeholder %}
+        <!-- CONTENT: open slot for a further parent testimonial (qualitative only). -->
+        {% include "components/placeholder-tag.njk" %}
+        {%- endif %}
+        <figure>
+          <blockquote><p>{{ t.text | safe }}</p></blockquote>
+          <figcaption><span class="testimonial__name">{{ t.name }}</span> <span class="testimonial__role">{{ t.role }}</span></figcaption>
+        </figure>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+</div>

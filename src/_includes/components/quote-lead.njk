@@ -1,0 +1,12 @@
+{#- The first proof after the hero: one parent quote, set large on the
+    page rather than boxed. -#}
+<div class="section section--quote">
+  <div class="container">
+    <figure class="quote-lead">
+      <blockquote>
+        <p>{{ leadQuote.text | safe }}</p>
+      </blockquote>
+      <figcaption>{{ leadQuote.name }}, {{ leadQuote.role }}</figcaption>
+    </figure>
+  </div>
+</div>

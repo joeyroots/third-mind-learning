@@ -104,19 +104,30 @@ test("sitemap lists all canonical pages and excludes infra", async () => {
   assert.ok(existsSync(new URL("../_site/sitemap.xml", import.meta.url)), "sitemap.xml exists");
   const xml = await read("sitemap.xml");
   const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname);
-  for (const path of ["/", "/research/", "/contact/", "/privacy/"]) {
+  for (const path of ["/", "/about/", "/research/", "/contact/", "/privacy/"]) {
     assert.ok(locs.includes(path), `sitemap has ${path}`);
   }
   assert.ok(!locs.includes("/404.html"), "sitemap omits /404.html");
   assert.ok(!locs.some((p) => p.endsWith("sitemap.xml") || p.endsWith("robots.txt")), "sitemap omits infra files");
 });
 
-test("old /about/ URL redirects to /research/", () => {
+test("about page is built, in the nav, and no longer redirected", async () => {
+  assert.ok(
+    existsSync(new URL("../_site/about/index.html", import.meta.url)),
+    "_site/about/index.html exists",
+  );
+  const $ = cheerio.load(await read("about/index.html"));
+  assert.equal($("h1").length, 1, "about has exactly one <h1>");
+  const homeNav = cheerio
+    .load(await read("index.html"))("header a[href]")
+    .map((_, a) => a.attribs.href)
+    .get();
+  assert.ok(homeNav.includes("/about/"), "home nav links to /about/");
   const cfg = JSON.parse(readFileSync(new URL("../firebase.json", import.meta.url), "utf8"));
-  const r = cfg.hosting.redirects.find((x) => x.source === "/about/");
-  assert.ok(r, "firebase.json has an /about/ redirect");
-  assert.equal(r.destination, "/research/");
-  assert.equal(r.type, 301);
+  assert.ok(
+    !(cfg.hosting.redirects || []).some((x) => x.source === "/about/"),
+    "firebase.json must not redirect /about/ away from the real page",
+  );
 });
 
 test("robots.txt points at the sitemap", async () => {

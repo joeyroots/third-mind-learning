@@ -9,7 +9,9 @@ deployed to Firebase Hosting via GitHub Actions.
 - Edit files under `src/`. **Never edit `_site/`** — it is regenerated on every
   build and is gitignored.
 - The header, footer, and nav live only in `src/_includes/layouts/base.njk` and
-  `src/_includes/partials/`. Never paste chrome markup into a page.
+  `src/_includes/components/` (`site-header.njk`, `site-footer.njk`). Never
+  paste chrome markup into a page. Page sections are reusable components in
+  the same folder; Home feeds them from its front matter.
 - Every page sets `title` and `description` front-matter and has exactly one
   `<h1>`.
 - A page that should exist but stay undiscoverable sets BOTH `unlisted: true`

@@ -1,0 +1,21 @@
+{#- Fit/approach questions in native <details>: collapsed, no JS.
+    No logistics or price here (D5, D7). -#}
+<div class="section section--tint">
+  <div class="container faq">
+    <div class="faq__head">
+      <h2>{{ faq.heading | safe }}</h2>
+      {%- if faq.placeholder %}
+      <!-- CONTENT: FAQ questions are topic stubs and the answers are empty; both get written in the copy round. -->
+      {% include "components/placeholder-tag.njk" %}
+      {%- endif %}
+    </div>
+    <div class="faq__list">
+      {%- for item in faq.items %}
+      <details>
+        <summary>{{ item.q | safe }}</summary>
+        <div class="faq__answer"><p>{{ item.a | safe }}</p></div>
+      </details>
+      {%- endfor %}
+    </div>
+  </div>
+</div>

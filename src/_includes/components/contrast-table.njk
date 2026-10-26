@@ -1,0 +1,45 @@
+{#- Typical prep vs Third Mind, as a real two-column table: rows are the
+    dimensions a parent would compare, so the structure is the content. -#}
+<div class="section">
+  <div class="container contrast">
+    {%- if contrast.photo %}
+    <figure class="contrast__photo">
+      <picture>
+        <source type="image/avif" srcset="/assets/img/teens-after-school-800.avif 800w, /assets/img/teens-after-school-1376.avif 1376w" sizes="(min-width: 72rem) 70rem, 100vw">
+        <source type="image/webp" srcset="/assets/img/teens-after-school-800.webp 800w, /assets/img/teens-after-school-1376.webp 1376w" sizes="(min-width: 72rem) 70rem, 100vw">
+        <img src="/assets/img/teens-after-school.jpg" srcset="/assets/img/teens-after-school-800.jpg 800w, /assets/img/teens-after-school.jpg 1376w" sizes="(min-width: 72rem) 70rem, 100vw" alt="" width="1376" height="1143" loading="lazy" decoding="async">
+      </picture>
+    </figure>
+    {%- endif %}
+    <div class="measure">
+      <h2>{{ contrast.heading | safe }}</h2>
+      <p>{{ contrast.intro | safe }}</p>
+    </div>
+    {%- if contrast.placeholder %}
+    <!-- CONTENT: "Typical prep" column and row labels are placeholders; the Third Mind column reuses the V4 "The material" / "The pressure" card copy. -->
+    {% include "components/placeholder-tag.njk" %}
+    {%- endif %}
+    <div class="contrast__wrap">
+      <table class="contrast__table">
+        <caption class="visually-hidden">{{ contrast.caption }}</caption>
+        <thead>
+          <tr>
+            <td></td>
+            <th scope="col">{{ contrast.columns[0] }}</th>
+            <th scope="col" class="contrast__ours">{{ contrast.columns[1] }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for row in contrast.rows %}
+          <tr>
+            <th scope="row">{{ row.label | safe }}</th>
+            <td data-col="{{ contrast.columns[0] }}"{% if row.typicalPlaceholder %} class="is-placeholder"{% endif %}>{{ row.typical | safe }}</td>
+            <td class="contrast__ours" data-col="{{ contrast.columns[1] }}">{{ row.ours | safe }}</td>
+          </tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p class="contrast__close measure">{{ contrast.close | safe }}</p>
+  </div>
+</div>

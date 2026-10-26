@@ -1,0 +1,30 @@
+{#- Logo, primary nav and the one CTA. Sticks to the top of the viewport
+    (CSS position: sticky). Below 56rem the nav collapses behind a menu
+    button; assets/js/menu.js wires the toggle, and without JS the nav
+    simply stays open. -#}
+<header class="site-header">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <nav class="container site-header__bar" aria-label="Primary">
+    <a class="site-name" href="/">
+      <svg class="site-name__mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="14"/><path d="M10 32 C16 16, 22 16, 26.5 32 S37 48, 41.5 32 S48 16, 54 32"/></svg>
+      <span>{{ site.title }}</span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-menu" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="menu-toggle__open" d="M4 7h16M4 12h16M4 17h16"/><path class="menu-toggle__close" d="M6 6l12 12M18 6L6 18"/></svg>
+      <span class="visually-hidden">Menu</span>
+    </button>
+    <ul class="site-nav" id="primary-menu">
+      {%- for entry in collections.navPages %}
+      <li>
+        <a href="{{ entry.url }}"{% if entry.url == page.url %} aria-current="page"{% endif %}>{{ entry.data.eleventyNavigation.key }}</a>
+      </li>
+      {%- endfor %}
+      {%- for link in nav.external %}
+      <li><a href="{{ link.url }}" rel="noopener" target="_blank">{{ link.label }}</a></li>
+      {%- endfor %}
+    </ul>
+    {%- if page.url != "/contact/" %}
+    <a class="button button--small site-header__cta" href="/contact/">Get in touch</a>
+    {%- endif %}
+  </nav>
+</header>

@@ -12,6 +12,14 @@ export default {
   // og:image/twitter:image tags when a value is present.
   ogImage: null,
   buildYear: new Date().getFullYear(),
+  // Optional strip above the header (components/announcement-bar.njk).
+  // Off by default; flip `show` and fill in text/href to run a promotion.
+  announcement: {
+    show: false,
+    text: "",
+    href: "",
+    linkLabel: "",
+  },
   // Cache-buster for immutably cached assets (firebase.json serves css/js/img
   // with max-age=31536000, immutable). Changes every build, so a deploy always
   // reaches returning browsers.
